@@ -12,10 +12,10 @@ export default {
 			// console.log("<<===============================================>>");
 		}
 	}, //end console
-	send(options = {}) {
+	send(options = {}) { 
 		// loading加载
-		uni.showLoading({
-			title: 'Loging...'
+		uni.showLoading({  
+			title: 'Loading...'
 		});
 
 		options.url = config.app_web_api_url + '' + options.url;
@@ -30,6 +30,7 @@ export default {
 				if (error != null) {
 					reject(error);
 				} else {
+					uni.hideLoading();
 					// 相应拦截、根据后端的状态码来写，可以自行判断和封装
 					// if (res.data.status == '-1001') {
 					// 	uni.hideLoading();
@@ -46,7 +47,10 @@ export default {
 	get(url = "", data = {}) {
 		return this.send({
 			url: url,
-			data: data, 
+			data: data,
+			header: {
+				'Content-Type':'application/x-www-form-urlencoded'
+			},
 			method: 'GET'
 		})
 	}, //end get

@@ -15,10 +15,12 @@
 			}
 		},
 		onLoad() {
-
+			this.loadMainData();
 		},
 		methods: {
-
+			loadMainData() {
+				
+			}
 		}
 	}
 </script>

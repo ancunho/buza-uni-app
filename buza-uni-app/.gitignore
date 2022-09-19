@@ -36,5 +36,5 @@ build/
 ### VS Code ###
 .vscode/
 
-/unpackage/
-/unpackage/dist/
+/buza-uniapp/unpackage/
+/buza-uniapp/unpackage/dist/

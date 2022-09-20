@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="content container">
 		<view class="title-content">Category</view>
 		<view class="top-category">
 			<view 	v-bind:class="idx == onLoadIdx ? 'top-category-item-on' : ''" class="top-category-item" 
@@ -9,9 +9,18 @@
 			</view>
 		</view>
 		<view class="post-list">
-			<view v-for="(item, idx) in lstPost">
-				<view>{{ item.postTitle }}</view>
+			<view class="post-list-item" v-for="(item, idx) in lstPost" >
+				<view class="post-list-item-image">
+					<image mode="scaleToFill" 
+							:src="item.postThumbnailBig || ''"
+					></image>
+				</view>
+				<view class="post-list-item-title">{{item.postTitle}}</view>
+				<view class="post-list-item-date">{{item.createTime}}</view>
 			</view>
+			<!-- <view v-for="(item, idx) in lstPost">
+				<view>{{ item.postTitle }}</view>
+			</view> -->
 		</view>
 		<!-- <view @click="handleGetUserInfo">Button</view> -->
 	</view>
@@ -21,6 +30,7 @@
 	export default {
 		data() {
 			return {
+				imageError: '',
 				title: 'Hello World',
 				formData: null,
 				openId: '',
@@ -28,7 +38,9 @@
 				lstPost:[],
 				onLoadIdx: 0,
 				page: 1,
-				limit: 15
+				limit: 15,
+				// candidates: ['北京', '南京', '东京', '武汉', '天津', '上海', '海口'],
+				// city: ''
 			}
 		},
 		async onLoad() {
@@ -96,7 +108,6 @@
 				};
 				await _this.$http.getPostListByCodeName(params).then(resPostList => {
 					_this.lstPost = resPostList.data;
-					console.log(_this.lstPost);
 				}).catch(resErrorPostList => {
 					_this.$utils.msg("获取错误");
 				});
@@ -105,9 +116,8 @@
 				let _this = this;
 				// 获取用户信息
 				// const userInfo = await _this.onWechatInfo();
-				var params = {};
-				const result2 = await _this.$http.getPostCategory(params);
-				console.log(result2);
+				// var params = {};
+				// const result2 = await _this.$http.getPostCategory(params);
 			},
 			async onWechatInfo() {
 				let _this = this;
@@ -117,7 +127,6 @@
 						lang: 'zh_CN',
 						desc: 'huqo',
 						success: res => {
-							console.log('用户同意了授权', res);
 							_this.formData = res.userInfo;
 							uni.getLocation({
 								type: 'gcj02',
@@ -126,7 +135,10 @@
 									_this.formData.longitude = resLocation.longitude;
 								},
 								fail: err => {
-									console.log(err);
+									uni.showToast({
+										title: 'Error',
+										icon: 'fail'
+									});
 								}
 							})
 							return resolve(res.userInfo);
@@ -169,11 +181,31 @@
 </script>
 
 <style>
+	.post-list-item {
+		position:relative;
+		display: flex;
+		padding:0 15px 15px 15px;
+		justify-content: flex-start;
+		margin-bottom: 15px;
+		
+		border-bottom: 1px solid #F3F4F6;
+	}
+	.post-list-item-image image {
+		border:1px solid #ddd; border-radius: 10px;
+		width: 120px; height: 80px; background-color: #eeeeee;
+		margin-right:10px;
+	}
+	.post-list-item-title {
+		color:#4B5563; font-size: 1.05rem; font-weight: bold;
+	}
+	.post-list-item-date {
+		position:absolute; bottom:15px; right:15px; font-size:0.7rem;
+	}
 	.title-content {
 		font-size: 1rem;
 		font-weight: bold;
 		color: #374151;
-		padding: 10px 10px 0 10px;
+		margin: 10px 10px 0 15px;
 	}
 
 	.top-category {
@@ -181,15 +213,17 @@
 		align-items: center;
 		flex-wrap: wrap;
 		overflow-x: auto;
-		margin: 10px 0;
+		padding: 10px;
 	}
 
 	.top-category-item {
-		width: 80px;
+		padding: 0 10px;
 		margin: 0 5px 15px 5px;
 		line-height: 55px;
 		text-align: center;
-		border: 1px solid #d1d5db;
+		border: 2px solid #9CA3AF;
+		color:#9CA3AF;
+		font-weight: bold;
 		cursor: pointer;
 		border-radius: 10px;
 		box-shadow: 2px 2px 5px #e5e7eb;
@@ -199,13 +233,14 @@
 	.top-category-item:hover,
 	.top-category-item:active,
 	.top-category-item:focus {
-		border-color: #00c3bd;
-		color: #00c3bd;
-		background-color: #f8fafc;
+		border-color: #1F2937;
+		color: #1F2937;
+		background-color: #ffffff;
+		box-shadow: 2px 4px 9px #e5e7eb;
 	}
 
 	.top-category-item-text {
-		font-size: 0.85rem;
+		font-size: 0.80rem;
 		font-weight: bolder;
 	}
 

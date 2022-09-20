@@ -7,8 +7,8 @@
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarTitleText": "B-Studio",
+    "navigationBarBackgroundColor": "#FCD34D",
     "backgroundColor": "#F8F8F8"
   },
   "tabBar": {

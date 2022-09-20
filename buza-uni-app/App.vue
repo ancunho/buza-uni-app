@@ -14,4 +14,5 @@
 
 <style>
 	/*每个页面公共css */
+	html,body { font-family: sans-serif;}
 </style>

@@ -1,7 +1,7 @@
 import App from './App'
 import * as http from './utils/api.js';
 import * as utils from './utils/utils.js';
-import config from '@/config.js';
+// import config from '@/config.js';
 
 import Vue from 'vue'
 Vue.prototype.$http = http;

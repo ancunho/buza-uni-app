@@ -16,7 +16,7 @@
 		},
 		async onLoad() {
 			let _this = this;
-			// Get openId 
+			// Get openId  
 			if (uni.getStorageSync("openId") == "") {
 				const code = await _this.onGetWechatCode();
 				var params = {code};

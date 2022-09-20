@@ -39,4 +39,5 @@ build/
 /buza-uniapp/unpackage/
 /buza-uniapp/unpackage/dist/
 !**/unpackage/
+unpackage/
 /unpackage/

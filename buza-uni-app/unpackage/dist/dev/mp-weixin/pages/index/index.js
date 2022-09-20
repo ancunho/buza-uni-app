@@ -157,6 +157,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -165,7 +169,10 @@ var _default =
       formData: null,
       openId: '',
       lstCategory: [],
-      onLoadIdx: 0 };
+      lstPost: [],
+      onLoadIdx: 0,
+      page: 1,
+      limit: 15 };
 
   },
   onLoad: function onLoad() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this, code, params;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
@@ -190,37 +197,53 @@ var _default =
                 uni.showToast({
                   title: "Error" });
 
-              });case 8:
+              });case 8:_context.next = 10;return (
 
-              _this.$http.getPostCategory().then(function (res) {
-                console.log(111);
-                _this.$utils.hideLoading();
-                if (res.code != 0) {
-                  _this.$utils.msg("获取错误");
-                } else {
-                  _this.lstCategory = res.data;
+                _this.$http.getPostCategory().then(function (res) {
+                  _this.$utils.hideLoading();
+                  if (res.code != 0) {
+                    _this.$utils.msg("获取错误");
+                  } else {
+                    _this.lstCategory = res.data;
+                    if (_this.lstCategory.length > 0) {
+                      var params = {
+                        postType: _this.lstCategory[0].codeId,
+                        page: _this.page,
+                        limit: _this.limit };
 
-                }
-              }).catch(function (resError) {
-                _this.$utils.hideLoading();
-                console.log(333);
-              });case 9:case "end":return _context.stop();}}}, _callee);}))();
+                      // const postListResult = _this.$http.getPostListByCodeName(params);
+                      // _this.lstCategory = postListResult.data;
+                      _this.$http.getPostListByCodeName(params).then(function (resPostList) {
+                        _this.lstPost = resPostList.data;
+                        console.log(_this.lstPost);
+                      }).catch(function (resErrorPostList) {
+                        _this.$utils.msg("获取错误");
+                      });
+                    }
+                  }
+                }).catch(function (resError) {
+                  _this.$utils.hideLoading();
+                }));case 10:case "end":return _context.stop();}}}, _callee);}))();
   },
   methods: {
     handleGetUserInfo: function handleGetUserInfo() {
       var _this = this;
       // _this.onGetUserInfo();
     },
-    handleGetPostListByCodeName: function handleGetPostListByCodeName(item, idx) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, params, postListResult;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    handleGetPostListByCodeName: function handleGetPostListByCodeName(item, idx) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, params;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 _this = _this3;
                 _this.onLoadIdx = idx;
                 params = {
-                  postType: item.codeName,
-                  page: 1,
-                  limit: 15 };_context2.next = 5;return (
+                  postType: item.codeId,
+                  page: _this.page,
+                  limit: _this.limit };_context2.next = 5;return (
 
-                  _this.$http.getPostListByCodeName(params));case 5:postListResult = _context2.sent;
-                console.log(postListResult);case 7:case "end":return _context2.stop();}}}, _callee2);}))();
+                  _this.$http.getPostListByCodeName(params).then(function (resPostList) {
+                    _this.lstPost = resPostList.data;
+                    console.log(_this.lstPost);
+                  }).catch(function (resErrorPostList) {
+                    _this.$utils.msg("获取错误");
+                  }));case 5:case "end":return _context2.stop();}}}, _callee2);}))();
     },
     onGetUserInfo: function onGetUserInfo() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this, params, result2;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 _this = _this4;

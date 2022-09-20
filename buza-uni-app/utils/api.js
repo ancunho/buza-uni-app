@@ -17,9 +17,9 @@ export function getPostCategory(params) {
 			resolve(result);
 		}).catch(error => {
 			reject(error);
-		})
+		});
 	});
-}
+};
 
 export function getPostListByCodeName(params) {
 	return new Promise((resolve, reject) => {
@@ -27,9 +27,9 @@ export function getPostListByCodeName(params) {
 			resolve(result);
 		}).catch(error => {
 			reject(error);
-		})
+		});
 	});
-}
+};
 
 
 

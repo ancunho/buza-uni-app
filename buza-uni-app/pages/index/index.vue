@@ -8,7 +8,11 @@
 				<text class="top-category-item-text">{{item.codeName}}</text>
 			</view>
 		</view>
-		
+		<view class="post-list">
+			<view v-for="(item, idx) in lstPost">
+				<view>{{ item.postTitle }}</view>
+			</view>
+		</view>
 		<!-- <view @click="handleGetUserInfo">Button</view> -->
 	</view>
 </template>
@@ -21,7 +25,10 @@
 				formData: null,
 				openId: '',
 				lstCategory: [],
+				lstPost:[],
 				onLoadIdx: 0,
+				page: 1,
+				limit: 15
 			}
 		},
 		async onLoad() {
@@ -48,18 +55,30 @@
 					})
 				});
 			}
-			_this.$http.getPostCategory().then(res => {
-				console.log(111);
+			await _this.$http.getPostCategory().then(res => {
 				_this.$utils.hideLoading();
 				if (res.code != 0) {
 					_this.$utils.msg("获取错误");
 				} else {
 					_this.lstCategory = res.data;
-
+					if (_this.lstCategory.length > 0) {
+						var params = {
+							postType: _this.lstCategory[0].codeId,
+							page: _this.page,
+							limit: _this.limit
+						};
+						// const postListResult = _this.$http.getPostListByCodeName(params);
+						// _this.lstCategory = postListResult.data;
+						_this.$http.getPostListByCodeName(params).then(resPostList => {
+							_this.lstPost = resPostList.data;
+							console.log(_this.lstPost);
+						}).catch(resErrorPostList => {
+							_this.$utils.msg("获取错误");
+						});
+					}
 				}
 			}).catch(resError => {
 				_this.$utils.hideLoading();
-				console.log(333);
 			});
 		},
 		methods: {
@@ -71,12 +90,16 @@
 				let _this = this;
 				_this.onLoadIdx = idx;
 				var params = {
-					postType: item.codeName,
-					page: 1,
-					limit: 15
+					postType: item.codeId,
+					page: _this.page,
+					limit: _this.limit
 				};
-				const postListResult = await _this.$http.getPostListByCodeName(params);
-				console.log(postListResult);
+				await _this.$http.getPostListByCodeName(params).then(resPostList => {
+					_this.lstPost = resPostList.data;
+					console.log(_this.lstPost);
+				}).catch(resErrorPostList => {
+					_this.$utils.msg("获取错误");
+				});
 			},
 			async onGetUserInfo() {
 				let _this = this;

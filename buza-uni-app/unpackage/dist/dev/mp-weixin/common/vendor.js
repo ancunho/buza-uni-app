@@ -9255,7 +9255,7 @@ function getPostCategory(params) {
       reject(error);
     });
   });
-}
+};
 
 function getPostListByCodeName(params) {
   return new Promise(function (resolve, reject) {
@@ -9265,7 +9265,7 @@ function getPostListByCodeName(params) {
       reject(error);
     });
   });
-}
+};
 
 
 

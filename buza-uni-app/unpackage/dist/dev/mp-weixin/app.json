@@ -15,11 +15,11 @@
     "color": "#7A7E83",
     "borderStyle": "black",
     "backgroundColor": "#FFFFFF",
-    "selectedColor": "#334155",
+    "selectedColor": "#000000",
     "list": [
       {
         "iconPath": "static/icon-exploer.png",
-        "text": "Explorer",
+        "text": "Explore",
         "pagePath": "pages/index/index",
         "selectedIconPath": "static/icon-exploer.png"
       },

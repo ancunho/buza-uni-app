@@ -3,7 +3,7 @@
 		<view style="width: 100%;">
 			<swiper class="swiper" circular interval="3000" duration="500">
 				<swiper-item>
-					<image style="display: block; width: 100%;" src="../../static/bg-yours.jpg"></image>
+					<image style="width: 100%;" mode="widthFix" src="../../static/bg-yours.jpg"></image>
 				</swiper-item>
 			</swiper>
 		</view>

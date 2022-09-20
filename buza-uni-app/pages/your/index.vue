@@ -1,7 +1,19 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view @click="handleGetUserInfo">Your</view>
+		<view style="width: 100%;">
+			<swiper class="swiper" circular interval="3000" duration="500">
+				<swiper-item>
+					<image style="display: block; width: 100%;" src="../../static/bg-yours.jpg"></image>
+				</swiper-item>
+			</swiper>
+		</view>
+		<view style="margin-top: 20px;">
+			<view style="text-align: center;">
+				<image style="width:100px; height:100px; border-radius: 50px;" :src="userInfo.avatarUrl || avatarUrl" />
+			</view>
+			<text></text>
+		</view>
+		<view @click="handleGetUserInfo">{{userInfo.nickName || '点击登录'}}</view>
 	</view> 
 </template>
 
@@ -11,7 +23,9 @@
 			return {
 				title: 'Hello World',
 				formData: null,
+				userInfo: {},
 				openId: '',
+				avatarUrl: '../../static/icon-mine.png',
 			}
 		},
 		async onLoad() {
@@ -35,19 +49,21 @@
 					})
 				});
 			}
+			
 		},
 		methods: {
 			handleGetUserInfo() {
 				let _this = this;
-				_this.onGetUserInfo();
-			},
-			async onGetUserInfo() { 
-				let _this = this; 
-				// 获取用户信息
-				// const userInfo = await _this.onWechatInfo();
-				var params = {};
-				const result2 = await _this.$http.getPostCategory(params);
-				console.log(result2); 
+				_this.onWechatInfo().then(res => {
+					console.log(res);
+					_this.userInfo = res;
+				}).catch(err => {
+					uni.showToast({
+						title: "Error",
+						icon:'error'
+					});
+				});
+				
 			},
 			async onWechatInfo() {
 				let _this = this;
@@ -57,30 +73,32 @@
 						lang: 'zh_CN',
 						desc: 'huqo',
 						success: res => {
-							console.log('用户同意了授权',res);
-							_this.formData = res.userInfo;
-							uni.getLocation({
-								type: 'gcj02',
-								success: resLocation => {
-									_this.formData.latitude = resLocation.latitude;
-									_this.formData.longitude = resLocation.longitude;
-								},
-								fail:err => {
-									console.log(err);
-								}
-							})
+							// _this.userInfo = res.userInfo;
+							// uni.getLocation({
+							// 	type: 'gcj02',
+							// 	success: resLocation => {
+							// 		_this.formData.latitude = resLocation.latitude;
+							// 		_this.formData.longitude = resLocation.longitude;
+							// 	},
+							// 	fail: err => {
+							// 		uni.showToast({
+							// 			title: 'Error',
+							// 			icon: 'fail'
+							// 		});
+							// 	}
+							// })
 							return resolve(res.userInfo);
 						},
 						fail: err => {
 							uni.showToast({
 								title: '用户拒绝了授权',
-								icon: 'fail'
+								icon: 'error'
 							});
 							return reject(err);
 						}
 					})
 				});
-			}, 
+			},
 			async onGetWechatCode() {
 				const [providerErr, providerData] = await uni.getProvider({
 					service: 'oauth'
@@ -88,7 +106,7 @@
 				if (providerErr) return uni.showToast({
 					title: '没有获取到服务商',
 					icon: "none"
-				}); 
+				});
 				const provider = providerData.provider;
 				if (provider.includes('weixin')) {
 					const options = {
@@ -115,23 +133,8 @@
 		align-items: center;
 		justify-content: center;
 	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
+	.swiper {
+		height: 300rpx;
+		width: 100%;
 	}
 </style>

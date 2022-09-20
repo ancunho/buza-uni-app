@@ -23,7 +23,7 @@ export default {
 
 		this.console(options);
 
-		// promise request
+		// promise request 
 		return new Promise((resolve, reject) => {
 			uni.request(options).then(data => {
 				var [error, res] = data;
@@ -41,7 +41,9 @@ export default {
 						resolve(res.data);
 					// }
 				}
-			})
+			}).catch(resError => {
+				console.log(resError);
+			});
 		});
 	}, //end send
 	get(url = "", data = {}) {

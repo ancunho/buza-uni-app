@@ -2,7 +2,7 @@
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
 		<view @click="handleGetUserInfo">Button</view>
-	</view>
+	</view> 
 </template>
 
 <script>
@@ -80,7 +80,7 @@
 						}
 					})
 				});
-			},
+			}, 
 			async onGetWechatCode() {
 				const [providerErr, providerData] = await uni.getProvider({
 					service: 'oauth'

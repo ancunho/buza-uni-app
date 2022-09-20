@@ -9323,7 +9323,7 @@ function getPostListByCodeName(params) {
 
     this.console(options);
 
-    // promise request
+    // promise request 
     return new Promise(function (resolve, reject) {
       uni.request(options).then(function (data) {var _data = _slicedToArray(
         data, 2),error = _data[0],res = _data[1];
@@ -9341,6 +9341,8 @@ function getPostListByCodeName(params) {
           resolve(res.data);
           // }
         }
+      }).catch(function (resError) {
+        console.log(resError);
       });
     });
   }, //end send

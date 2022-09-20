@@ -9234,7 +9234,7 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getOpenId = getOpenId;exports.getPostList = getPostList;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.getOpenId = getOpenId;exports.getPostCategory = getPostCategory;exports.getPostListByCodeName = getPostListByCodeName;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 
 function getOpenId(params) {
@@ -9247,9 +9247,19 @@ function getOpenId(params) {
   });
 }
 
-function getPostList(params) {
+function getPostCategory(params) {
   return new Promise(function (resolve, reject) {
-    _request.default.post("/post/list", params).then(function (result) {
+    _request.default.post("/miniapp/api/getPostCategory.do", params).then(function (result) {
+      resolve(result);
+    }).catch(function (error) {
+      reject(error);
+    });
+  });
+}
+
+function getPostListByCodeName(params) {
+  return new Promise(function (resolve, reject) {
+    _request.default.post("/miniapp/api/getPostListByCodeName.do", params).then(function (result) {
       resolve(result);
     }).catch(function (error) {
       reject(error);

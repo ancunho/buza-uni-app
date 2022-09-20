@@ -154,10 +154,30 @@ var _default =
   data: function data() {
     return {
       title: 'Hello World',
-      formData: null };
+      formData: null,
+      openId: '' };
 
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this, code, params;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              _this = _this2;
+              // Get openId
+              if (!(uni.getStorageSync("openId") == "")) {_context.next = 7;break;}_context.next = 4;return (
+                _this.onGetWechatCode());case 4:code = _context.sent;
+              params = { code: code };
+              _this.$http.getOpenId(params).then(function (res) {
+                if (res.status === 200) {
+                  _this.openId = res.data.openId;
+                  uni.setStorageSync("openId", res.data.openId);
+                } else {
+                  uni.showToast({
+                    title: "Error" });
+
+                }
+              }).catch(function (resError) {
+                uni.showToast({
+                  title: "Error" });
+
+              });case 7:case "end":return _context.stop();}}}, _callee);}))();
 
   },
   methods: {
@@ -165,19 +185,16 @@ var _default =
       var _this = this;
       _this.onGetUserInfo();
     },
-    onGetUserInfo: function onGetUserInfo() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this, userInfo, code, params, result;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                _this = _this2;
+    onGetUserInfo: function onGetUserInfo() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, params, result2;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                _this = _this3;
                 // 获取用户信息
-                _context.next = 3;return _this.onWechatInfo();case 3:userInfo = _context.sent;_context.next = 6;return (
-
-                  _this.onGetWechatCode());case 6:code = _context.sent;
-                params = { code: code };
-                result = _this.$http.getOpenId(params);
-                console.log(result);
-                console.log(_this.formData);case 11:case "end":return _context.stop();}}}, _callee);}))();
+                // const userInfo = await _this.onWechatInfo();
+                params = {};_context2.next = 4;return (
+                  _this.$http.getPostCategory(params));case 4:result2 = _context2.sent;
+                console.log(result2);case 6:case "end":return _context2.stop();}}}, _callee2);}))();
     },
-    onWechatInfo: function onWechatInfo() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
-                _this = _this3;return _context2.abrupt("return",
+    onWechatInfo: function onWechatInfo() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                _this = _this4;return _context3.abrupt("return",
                 new Promise(function (resolve, reject) {
                   if (!uni.canIUse('getUserProfile')) return null;
                   uni.getUserProfile({
@@ -206,31 +223,30 @@ var _default =
                       return reject(err);
                     } });
 
-                }));case 2:case "end":return _context2.stop();}}}, _callee2);}))();
+                }));case 2:case "end":return _context3.stop();}}}, _callee3);}))();
     },
-    onGetWechatCode: function onGetWechatCode() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _yield$uni$getProvide, _yield$uni$getProvide2, providerErr, providerData, provider, options, loginOnData, _loginOnData, loginErr, loginData;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
-                console.log(222);_context3.next = 3;return (
+    onGetWechatCode: function onGetWechatCode() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _yield$uni$getProvide, _yield$uni$getProvide2, providerErr, providerData, provider, options, loginOnData, _loginOnData, loginErr, loginData;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
                   uni.getProvider({
-                    service: 'oauth' }));case 3:_yield$uni$getProvide = _context3.sent;_yield$uni$getProvide2 = _slicedToArray(_yield$uni$getProvide, 2);providerErr = _yield$uni$getProvide2[0];providerData = _yield$uni$getProvide2[1];if (!
+                    service: 'oauth' }));case 2:_yield$uni$getProvide = _context4.sent;_yield$uni$getProvide2 = _slicedToArray(_yield$uni$getProvide, 2);providerErr = _yield$uni$getProvide2[0];providerData = _yield$uni$getProvide2[1];if (!
 
-                providerErr) {_context3.next = 9;break;}return _context3.abrupt("return", uni.showToast({
+                providerErr) {_context4.next = 8;break;}return _context4.abrupt("return", uni.showToast({
                   title: '没有获取到服务商',
-                  icon: "none" }));case 9:
+                  icon: "none" }));case 8:
 
                 provider = providerData.provider;if (!
-                provider.includes('weixin')) {_context3.next = 19;break;}
+                provider.includes('weixin')) {_context4.next = 18;break;}
                 options = {
                   provider: provider[0] // 'weixin'
-                };_context3.next = 14;return (
-                  uni.login(options));case 14:loginOnData = _context3.sent;_loginOnData = _slicedToArray(
+                };_context4.next = 13;return (
+                  uni.login(options));case 13:loginOnData = _context4.sent;_loginOnData = _slicedToArray(
                 loginOnData, 2), loginErr = _loginOnData[0], loginData = _loginOnData[1];if (!
-                loginErr) {_context3.next = 18;break;}return _context3.abrupt("return", uni.showToast({
+                loginErr) {_context4.next = 17;break;}return _context4.abrupt("return", uni.showToast({
                   title: loginErr,
-                  icon: 'none' }));case 18:return _context3.abrupt("return",
+                  icon: 'none' }));case 17:return _context4.abrupt("return",
 
-                loginData.code);case 19:return _context3.abrupt("return",
+                loginData.code);case 18:return _context4.abrupt("return",
 
-                null);case 20:case "end":return _context3.stop();}}}, _callee3);}))();
+                null);case 19:case "end":return _context4.stop();}}}, _callee4);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

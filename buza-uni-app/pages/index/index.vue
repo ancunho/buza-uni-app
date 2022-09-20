@@ -11,26 +11,43 @@
 			return {
 				title: 'Hello World',
 				formData: null,
+				openId: '',
 			}
 		},
-		onLoad() {
-			
+		async onLoad() {
+			let _this = this;
+			// Get openId
+			if (uni.getStorageSync("openId") == "") {
+				const code = await _this.onGetWechatCode();
+				var params = {code};
+				_this.$http.getOpenId(params).then(res => {
+					if (res.status === 200) {
+						_this.openId = res.data.openId;
+						uni.setStorageSync("openId", res.data.openId);
+					} else {
+						uni.showToast({
+							title: "Error"
+						});
+					}
+				}).catch(resError => {
+					uni.showToast({
+						title: "Error"
+					})
+				});
+			}
 		},
 		methods: {
 			handleGetUserInfo() {
 				let _this = this;
 				_this.onGetUserInfo();
 			},
-			async onGetUserInfo() {
+			async onGetUserInfo() { 
 				let _this = this; 
 				// 获取用户信息
-				const userInfo = await _this.onWechatInfo();
-				// 获取code
-				const code = await _this.onGetWechatCode();
-				var params = {code};
-				const result = _this.$http.getOpenId(params);
-				console.log(result);
-				console.log(_this.formData); 
+				// const userInfo = await _this.onWechatInfo();
+				var params = {};
+				const result2 = await _this.$http.getPostCategory(params);
+				console.log(result2); 
 			},
 			async onWechatInfo() {
 				let _this = this;
@@ -65,7 +82,6 @@
 				});
 			},
 			async onGetWechatCode() {
-				console.log(222)
 				const [providerErr, providerData] = await uni.getProvider({
 					service: 'oauth'
 				});

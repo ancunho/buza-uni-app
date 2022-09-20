@@ -10,8 +10,56 @@
 					"desc": "你的位置信息将用于小程序位置接口的效果展示" // 高速公路行驶持续后台定位
 				}
 			}
+		},
+		{
+			"path": "pages/product/index",
+			"style": {
+				"navigationBarTitleText": "product"
+			},
+			"permission": {
+				"scope.userLocation": {
+					"desc": "你的位置信息将用于小程序位置接口的效果展示" // 高速公路行驶持续后台定位
+				}
+			}
+		},
+		{
+			"path": "pages/your/index",
+			"style": {
+				"navigationBarTitleText": "your"
+			},
+			"permission": {
+				"scope.userLocation": {
+					"desc": "你的位置信息将用于小程序位置接口的效果展示" // 高速公路行驶持续后台定位
+				}
+			}
 		}
 	],
+	"tabBar": {
+		"color": "#7A7E83",
+		"borderStyle": "black",
+		"backgroundColor": "#FFFFFF",
+		"selectedColor": "#334155",
+		"list": [
+			{
+				"iconPath": "static/icon-exploer.png",
+				"text": "Explorer",
+				"pagePath": "pages/index/index",
+				"selectedIconPath": "static/icon-exploer.png"
+			},
+			{
+				"iconPath": "static/icon-present.png",
+				"text": "Product",
+				"pagePath": "pages/product/index",
+				"selectedIconPath": "static/icon-present.png"
+			},
+			{
+				"iconPath": "static/icon-mine.png",
+				"text": "Your",
+				"pagePath": "pages/your/index",
+				"selectedIconPath": "static/icon-mine.png"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

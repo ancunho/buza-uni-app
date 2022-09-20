@@ -160,7 +160,7 @@ var _default =
   },
   onLoad: function onLoad() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this, code, params;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
               _this = _this2;
-              // Get openId  
+              // Get openId   
               if (!(uni.getStorageSync("openId") == "")) {_context.next = 7;break;}_context.next = 4;return (
                 _this.onGetWechatCode());case 4:code = _context.sent;
               params = { code: code };

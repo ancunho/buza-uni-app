@@ -1,6 +1,8 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/product/index",
+    "pages/your/index"
   ],
   "subPackages": [],
   "window": {
@@ -8,6 +10,32 @@
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "borderStyle": "black",
+    "backgroundColor": "#FFFFFF",
+    "selectedColor": "#334155",
+    "list": [
+      {
+        "iconPath": "static/icon-exploer.png",
+        "text": "Explorer",
+        "pagePath": "pages/index/index",
+        "selectedIconPath": "static/icon-exploer.png"
+      },
+      {
+        "iconPath": "static/icon-present.png",
+        "text": "Product",
+        "pagePath": "pages/product/index",
+        "selectedIconPath": "static/icon-present.png"
+      },
+      {
+        "iconPath": "static/icon-mine.png",
+        "text": "Your",
+        "pagePath": "pages/your/index",
+        "selectedIconPath": "static/icon-mine.png"
+      }
+    ]
   },
   "permission": {
     "scope.userLocation": {

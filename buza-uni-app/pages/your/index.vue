@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
-		<view @click="handleGetUserInfo">Button</view>
+		<view @click="handleGetUserInfo">Your</view>
 	</view> 
 </template>
 

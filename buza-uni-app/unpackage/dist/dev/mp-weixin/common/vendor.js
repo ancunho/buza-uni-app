@@ -9259,7 +9259,7 @@ function getPostCategory(params) {
 
 function getPostListByCodeName(params) {
   return new Promise(function (resolve, reject) {
-    _request.default.post("/miniapp/api/getPostListByCodeName.do", params).then(function (result) {
+    _request.default.post("/miniapp/api/getPostListByCodeName.do?page=" + params.page + "&limit=" + params.limit, params).then(function (result) {
       resolve(result);
     }).catch(function (error) {
       reject(error);

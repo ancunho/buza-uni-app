@@ -1,8 +1,16 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view @click="handleGetUserInfo">Button</view>
-	</view> 
+		<view class="title-content">Category</view>
+		<view class="top-category">
+			<view 	v-bind:class="idx == onLoadIdx ? 'top-category-item-on' : ''" class="top-category-item" 
+					v-for="(item, idx) in lstCategory"
+					@click="handleGetPostListByCodeName(item,idx)">
+				<text class="top-category-item-text">{{item.codeName}}</text>
+			</view>
+		</view>
+		
+		<!-- <view @click="handleGetUserInfo">Button</view> -->
+	</view>
 </template>
 
 <script>
@@ -12,14 +20,19 @@
 				title: 'Hello World',
 				formData: null,
 				openId: '',
+				lstCategory: [],
+				onLoadIdx: 0,
 			}
 		},
 		async onLoad() {
 			let _this = this;
+			_this.$utils.showLoading();
 			// Get openId   
 			if (uni.getStorageSync("openId") == "") {
 				const code = await _this.onGetWechatCode();
-				var params = {code};
+				var params = {
+					code
+				};
 				_this.$http.getOpenId(params).then(res => {
 					if (res.status === 200) {
 						_this.openId = res.data.openId;
@@ -35,19 +48,43 @@
 					})
 				});
 			}
+			_this.$http.getPostCategory().then(res => {
+				console.log(111);
+				_this.$utils.hideLoading();
+				if (res.code != 0) {
+					_this.$utils.msg("获取错误");
+				} else {
+					_this.lstCategory = res.data;
+
+				}
+			}).catch(resError => {
+				_this.$utils.hideLoading();
+				console.log(333);
+			});
 		},
 		methods: {
 			handleGetUserInfo() {
 				let _this = this;
-				_this.onGetUserInfo();
+				// _this.onGetUserInfo();
 			},
-			async onGetUserInfo() { 
-				let _this = this; 
+			async handleGetPostListByCodeName(item, idx) {
+				let _this = this;
+				_this.onLoadIdx = idx;
+				var params = {
+					postType: item.codeName,
+					page: 1,
+					limit: 15
+				};
+				const postListResult = await _this.$http.getPostListByCodeName(params);
+				console.log(postListResult);
+			},
+			async onGetUserInfo() {
+				let _this = this;
 				// 获取用户信息
 				// const userInfo = await _this.onWechatInfo();
 				var params = {};
 				const result2 = await _this.$http.getPostCategory(params);
-				console.log(result2); 
+				console.log(result2);
 			},
 			async onWechatInfo() {
 				let _this = this;
@@ -57,7 +94,7 @@
 						lang: 'zh_CN',
 						desc: 'huqo',
 						success: res => {
-							console.log('用户同意了授权',res);
+							console.log('用户同意了授权', res);
 							_this.formData = res.userInfo;
 							uni.getLocation({
 								type: 'gcj02',
@@ -65,7 +102,7 @@
 									_this.formData.latitude = resLocation.latitude;
 									_this.formData.longitude = resLocation.longitude;
 								},
-								fail:err => {
+								fail: err => {
 									console.log(err);
 								}
 							})
@@ -80,7 +117,7 @@
 						}
 					})
 				});
-			}, 
+			},
 			async onGetWechatCode() {
 				const [providerErr, providerData] = await uni.getProvider({
 					service: 'oauth'
@@ -88,7 +125,7 @@
 				if (providerErr) return uni.showToast({
 					title: '没有获取到服务商',
 					icon: "none"
-				}); 
+				});
 				const provider = providerData.provider;
 				if (provider.includes('weixin')) {
 					const options = {
@@ -109,21 +146,47 @@
 </script>
 
 <style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+	.title-content {
+		font-size: 1rem;
+		font-weight: bold;
+		color: #374151;
+		padding: 10px 10px 0 10px;
 	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
+	.top-category {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		overflow-x: auto;
+		margin: 10px 0;
 	}
+
+	.top-category-item {
+		width: 80px;
+		margin: 0 5px 15px 5px;
+		line-height: 55px;
+		text-align: center;
+		border: 1px solid #d1d5db;
+		cursor: pointer;
+		border-radius: 10px;
+		box-shadow: 2px 2px 5px #e5e7eb;
+	}
+
+	.top-category-item.top-category-item-on,
+	.top-category-item:hover,
+	.top-category-item:active,
+	.top-category-item:focus {
+		border-color: #00c3bd;
+		color: #00c3bd;
+		background-color: #f8fafc;
+	}
+
+	.top-category-item-text {
+		font-size: 0.85rem;
+		font-weight: bolder;
+	}
+
+	.content {}
 
 	.text-area {
 		display: flex;

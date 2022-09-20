@@ -149,21 +149,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
       title: 'Hello World',
       formData: null,
-      openId: '' };
+      openId: '',
+      lstCategory: [],
+      onLoadIdx: 0 };
 
   },
   onLoad: function onLoad() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this, code, params;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
               _this = _this2;
+              _this.$utils.showLoading();
               // Get openId   
-              if (!(uni.getStorageSync("openId") == "")) {_context.next = 7;break;}_context.next = 4;return (
-                _this.onGetWechatCode());case 4:code = _context.sent;
-              params = { code: code };
+              if (!(uni.getStorageSync("openId") == "")) {_context.next = 8;break;}_context.next = 5;return (
+                _this.onGetWechatCode());case 5:code = _context.sent;
+              params = {
+                code: code };
+
               _this.$http.getOpenId(params).then(function (res) {
                 if (res.status === 200) {
                   _this.openId = res.data.openId;
@@ -177,24 +190,48 @@ var _default =
                 uni.showToast({
                   title: "Error" });
 
-              });case 7:case "end":return _context.stop();}}}, _callee);}))();
+              });case 8:
 
+              _this.$http.getPostCategory().then(function (res) {
+                console.log(111);
+                _this.$utils.hideLoading();
+                if (res.code != 0) {
+                  _this.$utils.msg("获取错误");
+                } else {
+                  _this.lstCategory = res.data;
+
+                }
+              }).catch(function (resError) {
+                _this.$utils.hideLoading();
+                console.log(333);
+              });case 9:case "end":return _context.stop();}}}, _callee);}))();
   },
   methods: {
     handleGetUserInfo: function handleGetUserInfo() {
       var _this = this;
-      _this.onGetUserInfo();
+      // _this.onGetUserInfo();
     },
-    onGetUserInfo: function onGetUserInfo() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, params, result2;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    handleGetPostListByCodeName: function handleGetPostListByCodeName(item, idx) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, params, postListResult;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 _this = _this3;
+                _this.onLoadIdx = idx;
+                params = {
+                  postType: item.codeName,
+                  page: 1,
+                  limit: 15 };_context2.next = 5;return (
+
+                  _this.$http.getPostListByCodeName(params));case 5:postListResult = _context2.sent;
+                console.log(postListResult);case 7:case "end":return _context2.stop();}}}, _callee2);}))();
+    },
+    onGetUserInfo: function onGetUserInfo() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this, params, result2;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                _this = _this4;
                 // 获取用户信息
                 // const userInfo = await _this.onWechatInfo();
-                params = {};_context2.next = 4;return (
-                  _this.$http.getPostCategory(params));case 4:result2 = _context2.sent;
-                console.log(result2);case 6:case "end":return _context2.stop();}}}, _callee2);}))();
+                params = {};_context3.next = 4;return (
+                  _this.$http.getPostCategory(params));case 4:result2 = _context3.sent;
+                console.log(result2);case 6:case "end":return _context3.stop();}}}, _callee3);}))();
     },
-    onWechatInfo: function onWechatInfo() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
-                _this = _this4;return _context3.abrupt("return",
+    onWechatInfo: function onWechatInfo() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _this;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
+                _this = _this5;return _context4.abrupt("return",
                 new Promise(function (resolve, reject) {
                   if (!uni.canIUse('getUserProfile')) return null;
                   uni.getUserProfile({
@@ -223,30 +260,30 @@ var _default =
                       return reject(err);
                     } });
 
-                }));case 2:case "end":return _context3.stop();}}}, _callee3);}))();
+                }));case 2:case "end":return _context4.stop();}}}, _callee4);}))();
     },
-    onGetWechatCode: function onGetWechatCode() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _yield$uni$getProvide, _yield$uni$getProvide2, providerErr, providerData, provider, options, loginOnData, _loginOnData, loginErr, loginData;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
+    onGetWechatCode: function onGetWechatCode() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var _yield$uni$getProvide, _yield$uni$getProvide2, providerErr, providerData, provider, options, loginOnData, _loginOnData, loginErr, loginData;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.next = 2;return (
                   uni.getProvider({
-                    service: 'oauth' }));case 2:_yield$uni$getProvide = _context4.sent;_yield$uni$getProvide2 = _slicedToArray(_yield$uni$getProvide, 2);providerErr = _yield$uni$getProvide2[0];providerData = _yield$uni$getProvide2[1];if (!
+                    service: 'oauth' }));case 2:_yield$uni$getProvide = _context5.sent;_yield$uni$getProvide2 = _slicedToArray(_yield$uni$getProvide, 2);providerErr = _yield$uni$getProvide2[0];providerData = _yield$uni$getProvide2[1];if (!
 
-                providerErr) {_context4.next = 8;break;}return _context4.abrupt("return", uni.showToast({
+                providerErr) {_context5.next = 8;break;}return _context5.abrupt("return", uni.showToast({
                   title: '没有获取到服务商',
                   icon: "none" }));case 8:
 
                 provider = providerData.provider;if (!
-                provider.includes('weixin')) {_context4.next = 18;break;}
+                provider.includes('weixin')) {_context5.next = 18;break;}
                 options = {
                   provider: provider[0] // 'weixin'
-                };_context4.next = 13;return (
-                  uni.login(options));case 13:loginOnData = _context4.sent;_loginOnData = _slicedToArray(
+                };_context5.next = 13;return (
+                  uni.login(options));case 13:loginOnData = _context5.sent;_loginOnData = _slicedToArray(
                 loginOnData, 2), loginErr = _loginOnData[0], loginData = _loginOnData[1];if (!
-                loginErr) {_context4.next = 17;break;}return _context4.abrupt("return", uni.showToast({
+                loginErr) {_context5.next = 17;break;}return _context5.abrupt("return", uni.showToast({
                   title: loginErr,
-                  icon: 'none' }));case 17:return _context4.abrupt("return",
+                  icon: 'none' }));case 17:return _context5.abrupt("return",
 
-                loginData.code);case 18:return _context4.abrupt("return",
+                loginData.code);case 18:return _context5.abrupt("return",
 
-                null);case 19:case "end":return _context4.stop();}}}, _callee4);}))();
+                null);case 19:case "end":return _context5.stop();}}}, _callee5);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

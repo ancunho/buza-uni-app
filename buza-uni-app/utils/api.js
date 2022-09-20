@@ -23,7 +23,7 @@ export function getPostCategory(params) {
 
 export function getPostListByCodeName(params) {
 	return new Promise((resolve, reject) => {
-		request.post("/miniapp/api/getPostListByCodeName.do", params).then(result => {
+		request.post("/miniapp/api/getPostListByCodeName.do?page=" + params.page + "&limit=" + params.limit, params).then(result => {
 			resolve(result);
 		}).catch(error => {
 			reject(error);

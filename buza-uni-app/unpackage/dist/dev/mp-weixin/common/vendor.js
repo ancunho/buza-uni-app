@@ -9084,9 +9084,9 @@ internalMixin(Vue);
 
 /***/ }),
 /* 5 */
-/*!********************************************************************!*\
-  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/pages.json ***!
-  \********************************************************************/
+/*!********************************************************!*\
+  !*** D:/practice/buza-uni-app/buza-uni-app/pages.json ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9227,9 +9227,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 12 */
-/*!**********************************************************************!*\
-  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/utils/api.js ***!
-  \**********************************************************************/
+/*!**********************************************************!*\
+  !*** D:/practice/buza-uni-app/buza-uni-app/utils/api.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9291,9 +9291,9 @@ function getPostListByCodeName(params) {
 
 /***/ }),
 /* 13 */
-/*!**************************************************************************!*\
-  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/utils/request.js ***!
-  \**************************************************************************/
+/*!**************************************************************!*\
+  !*** D:/practice/buza-uni-app/buza-uni-app/utils/request.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9366,9 +9366,9 @@ function getPostListByCodeName(params) {
 
 /***/ }),
 /* 14 */
-/*!*******************************************************************!*\
-  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/config.js ***!
-  \*******************************************************************/
+/*!*******************************************************!*\
+  !*** D:/practice/buza-uni-app/buza-uni-app/config.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9381,9 +9381,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 /* 15 */
-/*!************************************************************************!*\
-  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/utils/utils.js ***!
-  \************************************************************************/
+/*!************************************************************!*\
+  !*** D:/practice/buza-uni-app/buza-uni-app/utils/utils.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

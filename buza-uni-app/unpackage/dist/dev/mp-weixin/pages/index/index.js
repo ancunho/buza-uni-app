@@ -170,6 +170,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
@@ -182,7 +184,8 @@ var _default =
       lstPost: [],
       onLoadIdx: 0,
       page: 1,
-      limit: 15
+      limit: 15,
+      showLeft: false
       // candidates: ['北京', '南京', '东京', '武汉', '天津', '上海', '海口'],
       // city: ''
     };
@@ -238,6 +241,14 @@ var _default =
                 }));case 10:case "end":return _context.stop();}}}, _callee);}))();
   },
   methods: {
+    handleClickDetail: function handleClickDetail(item) {
+      var _this = this;
+      uni.navigateTo({
+        url: 'post_detail?postId=' + item.postId,
+        animationType: 'pop-in',
+        animationDuration: 200 });
+
+    },
     handleGetUserInfo: function handleGetUserInfo() {
       var _this = this;
       // _this.onGetUserInfo();

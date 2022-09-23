@@ -19,6 +19,12 @@
 			}
 		},
 		{
+			"path": "pages/index/post_detail",
+			"style": {
+				"navigationBarTitleText": "B-Studio"
+			}
+		},
+		{
 			"path": "pages/product/index",
 			"style": {
 				"navigationBarTitleText": "Branding"

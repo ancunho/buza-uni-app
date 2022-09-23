@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/index/post_detail",
     "pages/product/index",
     "pages/your/index"
   ],

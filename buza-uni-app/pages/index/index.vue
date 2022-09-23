@@ -1,22 +1,24 @@
 <template>
 	<view class="content container">
-		<view class="title-content">Category</view>
+		<view class="title-content">카테고리</view>
 		<view class="top-category">
 			<view 	v-bind:class="idx == onLoadIdx ? 'top-category-item-on' : ''" class="top-category-item" 
 					v-for="(item, idx) in lstCategory"
 					@click="handleGetPostListByCodeName(item,idx)">
-				<text class="top-category-item-text">{{item.codeName}}</text>
+				<text class="top-category-item-text">#{{item.codeName}}</text>
 			</view>
 		</view>
+		<view class="post-title"></view>
 		<view class="post-list">
 			<view class="post-list-item" v-for="(item, idx) in lstPost" >
 				<view class="post-list-item-image">
 					<image mode="scaleToFill" 
 							:src="item.postThumbnailBig || ''"
+							@click="handleClickDetail(item)"
 					></image>
 				</view>
-				<view class="post-list-item-title">{{item.postTitle}}</view>
-				<view class="post-list-item-date">{{item.createTime}}</view>
+				<view class="post-list-item-title" @click="handleClickDetail(item)">{{item.postTitle}}</view>
+				<view class="post-list-item-date">Date.{{item.createTime}}</view>
 			</view>
 			<!-- <view v-for="(item, idx) in lstPost">
 				<view>{{ item.postTitle }}</view>
@@ -39,6 +41,7 @@
 				onLoadIdx: 0,
 				page: 1,
 				limit: 15,
+				showLeft: false,
 				// candidates: ['北京', '南京', '东京', '武汉', '天津', '上海', '海口'],
 				// city: ''
 			}
@@ -94,6 +97,14 @@
 			});
 		},
 		methods: {
+			handleClickDetail(item) {
+				let _this = this;
+				uni.navigateTo({
+					url: 'post_detail?postId=' + item.postId,
+					animationType: 'pop-in',
+					animationDuration: 200
+				})
+			},
 			handleGetUserInfo() {
 				let _this = this;
 				// _this.onGetUserInfo();
@@ -183,23 +194,16 @@
 <style>
 	.post-list-item {
 		position:relative;
-		display: flex;
-		padding:0 15px 15px 15px;
-		justify-content: flex-start;
 		margin-bottom: 15px;
-		
+		padding: 15px;
 		border-bottom: 1px solid #F3F4F6;
 	}
-	.post-list-item-image image {
-		border:1px solid #ddd; border-radius: 10px;
-		width: 120px; height: 80px; background-color: #eeeeee;
-		margin-right:10px;
-	}
+	.post-list-item-image image { width:100%; background-color: #eeeeee; }
 	.post-list-item-title {
-		margin-top: 3px;color:#4B5563; font-size: 1.05rem; font-weight: bold;
+		line-height: 1.5rem; padding: 7px; color:#4B5563; font-size: 1.05rem; font-weight: bold;
 	}
 	.post-list-item-date {
-		position:absolute; bottom:15px; right:15px; font-size:0.7rem; color:#9CA3AF;
+		 font-size:0.7rem; color:#9CA3AF; padding: 0 7px;
 	}
 	.title-content {
 		font-size: 1rem;

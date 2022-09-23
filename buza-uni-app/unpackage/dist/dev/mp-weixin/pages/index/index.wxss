@@ -1,23 +1,17 @@
 
 .post-list-item {
 	position:relative;
-	display: flex;
-	padding:0 15px 15px 15px;
-	justify-content: flex-start;
 	margin-bottom: 15px;
-	
+	padding: 15px;
 	border-bottom: 1px solid #F3F4F6;
 }
-.post-list-item-image image {
-	border:1px solid #ddd; border-radius: 10px;
-	width: 120px; height: 80px; background-color: #eeeeee;
-	margin-right:10px;
+.post-list-item-image image { width:100%; background-color: #eeeeee;
 }
 .post-list-item-title {
-	margin-top: 3px;color:#4B5563; font-size: 1.05rem; font-weight: bold;
+	line-height: 1.5rem; padding: 7px; color:#4B5563; font-size: 1.05rem; font-weight: bold;
 }
 .post-list-item-date {
-	position:absolute; bottom:15px; right:15px; font-size:0.7rem; color:#9CA3AF;
+	 font-size:0.7rem; color:#9CA3AF; padding: 0 7px;
 }
 .title-content {
 	font-size: 1rem;

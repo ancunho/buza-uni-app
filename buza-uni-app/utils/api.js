@@ -31,6 +31,16 @@ export function getPostListByCodeName(params) {
 	});
 };
 
+export function getPostDetailByPostId(params) {
+	return new Promise((resolve, reject) => {
+		request.post("/miniapp/api/getPostDetailByPostId.do", params).then(result => {
+			resolve(result);
+		}).catch(error => {
+			reject(error);
+		});
+	});
+};
+
 
 
 // export function httpGet(url, params) {

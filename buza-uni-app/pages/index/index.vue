@@ -12,7 +12,7 @@
 		<view class="post-list">
 			<view class="post-list-item" v-for="(item, idx) in lstPost" >
 				<view class="post-list-item-image">
-					<image mode="scaleToFill" 
+					<image mode="widthFix" 
 							:src="item.postThumbnailBig || ''"
 							@click="handleClickDetail(item)"
 					></image>

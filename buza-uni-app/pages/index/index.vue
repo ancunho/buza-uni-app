@@ -18,7 +18,10 @@
 					></image>
 				</view>
 				<view class="post-list-item-title" @click="handleClickDetail(item)">{{item.postTitle}}</view>
-				<view class="post-list-item-date">Date.{{item.createTime}}</view>
+				<view class="post-list-item-remark">
+					<view class="post-list-item-date">Date.{{item.createTime}}</view>
+					<uni-icons class="post-list-item-like" @click="handleClickHeart(item)" type="heart" size="30"></uni-icons>
+				</view>
 			</view>
 			<!-- <view v-for="(item, idx) in lstPost">
 				<view>{{ item.postTitle }}</view>
@@ -70,6 +73,7 @@
 					})
 				});
 			}
+			// Get UserInfo
 			await _this.$http.getPostCategory().then(res => {
 				_this.$utils.hideLoading();
 				if (res.code != 0) {
@@ -97,6 +101,20 @@
 			});
 		},
 		methods: {
+			handleClickHeart(item) {
+				let _this = this;
+				if(uni.getStorageSync("userInfo") == "") {
+					_this.onWechatInfo().then(res => {
+						console.log(res);
+					}).catch(resError => {
+						console.log(resError);
+					});
+					
+				} else {
+					console.log(2222);
+					console.log(_this.formData);
+				}
+			},
 			handleClickDetail(item) {
 				let _this = this;
 				uni.navigateTo({
@@ -133,25 +151,18 @@
 			async onWechatInfo() {
 				let _this = this;
 				return new Promise((resolve, reject) => {
-					if (!uni.canIUse('getUserProfile')) return null;
+					if (!uni.canIUse('getUserProfile')) {
+						uni.showToast({
+							title: "无法获取getUserProfile",
+							icon: 'error'
+						})
+						return null;	
+					} 
 					uni.getUserProfile({
 						lang: 'zh_CN',
 						desc: 'huqo',
 						success: res => {
 							_this.formData = res.userInfo;
-							uni.getLocation({
-								type: 'gcj02',
-								success: resLocation => {
-									_this.formData.latitude = resLocation.latitude;
-									_this.formData.longitude = resLocation.longitude;
-								},
-								fail: err => {
-									uni.showToast({
-										title: 'Error',
-										icon: 'fail'
-									});
-								}
-							})
 							return resolve(res.userInfo);
 						},
 						fail: err => {
@@ -198,9 +209,14 @@
 		padding: 15px;
 		border-bottom: 1px solid #F3F4F6;
 	}
-	.post-list-item-image image { width:100%; background-color: #eeeeee; }
+	.post-list-item-image image { border-radius: 5px; width:100%; background-color: #eeeeee; }
 	.post-list-item-title {
 		line-height: 1.5rem; padding: 7px; color:#4B5563; font-size: 1.05rem; font-weight: bold;
+	}
+	.post-list-item-remark {
+		display:flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 	.post-list-item-date {
 		 font-size:0.7rem; color:#9CA3AF; padding: 0 7px;

@@ -71,7 +71,7 @@
 					if (!uni.canIUse('getUserProfile')) return null;
 					uni.getUserProfile({
 						lang: 'zh_CN',
-						desc: 'huqo',
+						desc: 'getUserProfile',
 						success: res => {
 							// _this.userInfo = res.userInfo;
 							// uni.getLocation({

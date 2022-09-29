@@ -3,13 +3,13 @@ import config from "@/config.js";
 export default {
 	console(options) {
 		if (config.debug) {
-			// console.log("<<===============================================>>");
-			// console.log("request start");
-			// console.log("header" + JSON.stringify(options.header));
-			// console.log("method: " + options.method + " URL: " + options.url);
-			// console.log(options.data);
-			// console.log("request end");
-			// console.log("<<===============================================>>");
+			// console.info("<<===============================================>>");
+			// console.info("request start");
+			// console.info("header" + JSON.stringify(options.header));
+			// console.info("method: " + options.method + " URL: " + options.url);
+			// console.info(options.data);
+			// console.info("request end");
+			// console.info("<<===============================================>>");
 		}
 	}, //end console
 	send(options = {}) { 
@@ -43,6 +43,7 @@ export default {
 				}
 			}).catch(resError => {
 				console.log(resError);
+				reject(resError);
 			});
 		});
 	}, //end send

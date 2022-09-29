@@ -194,10 +194,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -211,34 +207,57 @@ var _default =
       onLoadIdx: 0,
       page: 1,
       limit: 15,
-      showLeft: false
+      showLeft: false,
+      userInfo: {},
+      customerDto: {}
       // candidates: ['北京', '南京', '东京', '武汉', '天津', '上海', '海口'],
       // city: ''
     };
   },
-  onLoad: function onLoad() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this, code, params;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+  onLoad: function onLoad() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this, code;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
               _this = _this2;
               _this.$utils.showLoading();
-              // Get openId   
+              // Get openId
               if (!(uni.getStorageSync("openId") == "")) {_context.next = 8;break;}_context.next = 5;return (
-                _this.onGetWechatCode());case 5:code = _context.sent;
-              params = {
-                code: code };
 
-              _this.$http.getOpenId(params).then(function (res) {
-                if (res.status === 200) {
-                  _this.openId = res.data.openId;
-                  uni.setStorageSync("openId", res.data.openId);
-                } else {
+                _this.onGetWechatCode().then(function (code) {
+                  return code;
+                }).catch(function (resError) {
+                  uni.showToast({
+                    icon: 'error',
+                    title: "获取code失败" });
+
+                  return;
+                }));case 5:code = _context.sent;_context.next = 8;return (
+
+                _this.$http.getOpenId({ code: code }).then(function (res) {
+                  if (res.status === 200) {
+                    _this.openId = res.data.openId;
+                    uni.setStorageSync("openId", res.data.openId);
+                  } else {
+                    uni.showToast({
+                      icon: 'error',
+                      title: "无法获取OpenId，请确认网络" });
+
+                  }
+                }).catch(function (resError) {
                   uni.showToast({
                     title: "Error" });
 
-                }
-              }).catch(function (resError) {
-                uni.showToast({
-                  title: "Error" });
+                  return;
+                }));case 8:_context.next = 10;return (
 
-              });case 8:_context.next = 10;return (
+
+
+                _this.$http.getCustomerByDto({ openId: uni.getStorageSync("openId") }).then(function (res) {
+                  _this.userInfo = res.data == undefined ? "" : res.data;
+                  uni.setStorageSync("userInfo", _this.userInfo);
+                }).catch(function (resError) {
+                  uni.showToast({
+                    icon: 'error',
+                    title: "Welcome!" });
+
+                }));case 10:_context.next = 12;return (
 
 
                 _this.$http.getPostCategory().then(function (res) {
@@ -248,16 +267,14 @@ var _default =
                   } else {
                     _this.lstCategory = res.data;
                     if (_this.lstCategory.length > 0) {
+                      // Get post list by codeName
                       var params = {
                         postType: _this.lstCategory[0].codeId,
                         page: _this.page,
                         limit: _this.limit };
 
-                      // const postListResult = _this.$http.getPostListByCodeName(params);
-                      // _this.lstCategory = postListResult.data;
                       _this.$http.getPostListByCodeName(params).then(function (resPostList) {
                         _this.lstPost = resPostList.data;
-                        console.log(_this.lstPost);
                       }).catch(function (resErrorPostList) {
                         _this.$utils.msg("获取错误");
                       });
@@ -265,22 +282,62 @@ var _default =
                   }
                 }).catch(function (resError) {
                   _this.$utils.hideLoading();
-                }));case 10:case "end":return _context.stop();}}}, _callee);}))();
+                }));case 12:case "end":return _context.stop();}}}, _callee);}))();
+
+  },
+  onPullDownRefresh: function onPullDownRefresh() {
+    var _this = this;
+    _this.$http.getPostCategory().then(function (res) {
+      uni.stopPullDownRefresh();
+      if (res.code != 0) {
+        _this.$utils.msg("获取错误");
+      } else {
+        _this.lstCategory = res.data;
+      }
+    }).catch(function (resError) {
+      uni.showToast({
+        icon: 'error',
+        title: "Error!" });
+
+    });
   },
   methods: {
-    handleClickHeart: function handleClickHeart(item) {
-      var _this = this;
-      if (uni.getStorageSync("userInfo") == "") {
-        _this.onWechatInfo().then(function (res) {
-          console.log(res);
-        }).catch(function (resError) {
-          console.log(resError);
-        });
+    handleClickHeart: function handleClickHeart(item) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, _yield$uni$getUserPro, _yield$uni$getUserPro2, profileError, profileData, userInfo;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                _this = _this3;if (!(
+                uni.getStorageSync("userInfo") == "")) {_context2.next = 19;break;}if (
 
-      } else {
-        console.log(2222);
-        console.log(_this.formData);
-      }
+                uni.canIUse('getUserProfile')) {_context2.next = 5;break;}
+                uni.showToast({
+                  title: "无法获取getUserProfile",
+                  icon: 'error' });return _context2.abrupt("return",
+
+                null);case 5:_context2.next = 7;return (
+
+
+                  uni.getUserProfile({
+                    lang: 'zh_CN',
+                    desc: 'huqo' }).
+                  then(function (res) {
+                    return res;
+                  }).catch(function (resError) {
+                    return resError;
+                  }));case 7:_yield$uni$getUserPro = _context2.sent;_yield$uni$getUserPro2 = _slicedToArray(_yield$uni$getUserPro, 2);profileError = _yield$uni$getUserPro2[0];profileData = _yield$uni$getUserPro2[1];if (!
+
+                profileError) {_context2.next = 14;break;}
+                uni.showToast({
+                  title: '用户拒绝了授权',
+                  icon: 'fail' });return _context2.abrupt("return");case 14:
+
+
+
+
+                userInfo = profileData.userInfo;
+                userInfo.openId = uni.getStorageSync("openId");
+                uni.setStorageSync("userInfo", userInfo);_context2.next = 21;break;case 19:
+
+                console.log(2222);
+                console.log(uni.getStorageSync("userInfo"));case 21:case "end":return _context2.stop();}}}, _callee2);}))();
+
     },
     handleClickDetail: function handleClickDetail(item) {
       var _this = this;
@@ -290,61 +347,52 @@ var _default =
         animationDuration: 200 });
 
     },
-    handleGetUserInfo: function handleGetUserInfo() {
-      var _this = this;
-      // _this.onGetUserInfo();
-    },
-    handleGetPostListByCodeName: function handleGetPostListByCodeName(item, idx) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, params;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
-                _this = _this3;
+    handleGetPostListByCodeName: function handleGetPostListByCodeName(item, idx) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this, params;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                _this = _this4;
                 _this.onLoadIdx = idx;
                 params = {
                   postType: item.codeId,
                   page: _this.page,
-                  limit: _this.limit };_context2.next = 5;return (
+                  limit: _this.limit };_context3.next = 5;return (
 
                   _this.$http.getPostListByCodeName(params).then(function (resPostList) {
                     _this.lstPost = resPostList.data;
                   }).catch(function (resErrorPostList) {
                     _this.$utils.msg("获取错误");
-                  }));case 5:case "end":return _context2.stop();}}}, _callee2);}))();
+                  }));case 5:case "end":return _context3.stop();}}}, _callee3);}))();
     },
-    onGetUserInfo: function onGetUserInfo() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
-                _this = _this4;
-                // 获取用户信息
-                // const userInfo = await _this.onWechatInfo();
-                // var params = {};
-                // const result2 = await _this.$http.getPostCategory(params);
-              case 1:case "end":return _context3.stop();}}}, _callee3);}))();},
     onWechatInfo: function onWechatInfo() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _this;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
                 _this = _this5;return _context4.abrupt("return",
                 new Promise(function (resolve, reject) {
-                  if (!uni.canIUse('getUserProfile')) {
-                    uni.showToast({
-                      title: "无法获取getUserProfile",
-                      icon: 'error' });
 
-                    return null;
-                  }
                   uni.getUserProfile({
                     lang: 'zh_CN',
-                    desc: 'huqo',
-                    success: function success(res) {
-                      _this.formData = res.userInfo;
-                      return resolve(res.userInfo);
-                    },
-                    fail: function fail(err) {
-                      uni.showToast({
-                        title: '用户拒绝了授权',
-                        icon: 'fail' });
+                    desc: 'huqo' }).
+                  then(function (res) {
+                    _this.formData = res.userInfo;
+                    resolve(res.userInfo);
+                  }).catch(function (resError) {
+                    uni.showToast({
+                      title: '用户拒绝了授权',
+                      icon: 'fail' });
 
-                      return reject(err);
-                    } });
+                    reject(err);
+                  });
+                }).catch(function (promiseError) {
+                  uni.showToast({
+                    title: '获取用户信息失败',
+                    icon: 'fail' });
 
                 }));case 2:case "end":return _context4.stop();}}}, _callee4);}))();
     },
     onGetWechatCode: function onGetWechatCode() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var _yield$uni$getProvide, _yield$uni$getProvide2, providerErr, providerData, provider, options, loginOnData, _loginOnData, loginErr, loginData;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.next = 2;return (
                   uni.getProvider({
-                    service: 'oauth' }));case 2:_yield$uni$getProvide = _context5.sent;_yield$uni$getProvide2 = _slicedToArray(_yield$uni$getProvide, 2);providerErr = _yield$uni$getProvide2[0];providerData = _yield$uni$getProvide2[1];if (!
+                    service: 'oauth' }).
+                  then(function (res) {
+                    return res;
+                  }).catch(function (resError) {
+                    return resError;
+                  }));case 2:_yield$uni$getProvide = _context5.sent;_yield$uni$getProvide2 = _slicedToArray(_yield$uni$getProvide, 2);providerErr = _yield$uni$getProvide2[0];providerData = _yield$uni$getProvide2[1];if (!
 
                 providerErr) {_context5.next = 8;break;}return _context5.abrupt("return", uni.showToast({
                   title: '没有获取到服务商',
@@ -355,7 +403,11 @@ var _default =
                 options = {
                   provider: provider[0] // 'weixin'
                 };_context5.next = 13;return (
-                  uni.login(options));case 13:loginOnData = _context5.sent;_loginOnData = _slicedToArray(
+                  uni.login(options).then(function (res) {
+                    return res;
+                  }).catch(function (resError) {
+                    return null;
+                  }));case 13:loginOnData = _context5.sent;_loginOnData = _slicedToArray(
                 loginOnData, 2), loginErr = _loginOnData[0], loginData = _loginOnData[1];if (!
                 loginErr) {_context5.next = 17;break;}return _context5.abrupt("return", uni.showToast({
                   title: loginErr,

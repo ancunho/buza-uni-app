@@ -2675,9 +2675,12 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getOpenId = getOpenId;exports.getPostCategory = getPostCategory;exports.getPostListByCodeName = getPostListByCodeName;exports.getPostDetailByPostId = getPostDetailByPostId;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.getOpenId = getOpenId;exports.getCustomerByDto = getCustomerByDto;exports.getPostCategory = getPostCategory;exports.getPostListByCodeName = getPostListByCodeName;exports.getPostDetailByPostId = getPostDetailByPostId;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
-
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                         * @param {Object} params
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                         * @description Get OpenId
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                         */
 function getOpenId(params) {
   return new Promise(function (resolve, reject) {
     _request.default.get("/miniapp/api/getOpenId.do", params).then(function (result) {
@@ -2685,9 +2688,32 @@ function getOpenId(params) {
     }).catch(function (error) {
       reject(error);
     });
+  }).catch(function (resError) {
+    reject(error);
   });
 }
 
+/**
+   * @param {Object} params
+   * @description Get CustomerDto by customerDto
+   * main parameter: openId
+   */
+function getCustomerByDto(params) {
+  return new Promise(function (resolve, reject) {
+    _request.default.post("/miniapp/api/getCustomerInfoByDto.do", params).then(function (result) {
+      resolve(result);
+    }).catch(function (error) {
+      reject(error);
+    });
+  }).catch(function (resError) {
+    reject(error);
+  });
+};
+
+/**
+    * @param {Object} params
+    * @description Get post catgory list
+    */
 function getPostCategory(params) {
   return new Promise(function (resolve, reject) {
     _request.default.post("/miniapp/api/getPostCategory.do", params).then(function (result) {
@@ -2695,6 +2721,8 @@ function getPostCategory(params) {
     }).catch(function (error) {
       reject(error);
     });
+  }).catch(function (resError) {
+    reject(error);
   });
 };
 
@@ -2705,6 +2733,8 @@ function getPostListByCodeName(params) {
     }).catch(function (error) {
       reject(error);
     });
+  }).catch(function (resError) {
+    reject(error);
   });
 };
 
@@ -2715,6 +2745,8 @@ function getPostDetailByPostId(params) {
     }).catch(function (error) {
       reject(error);
     });
+  }).catch(function (resError) {
+    reject(error);
   });
 };
 
@@ -2755,13 +2787,13 @@ function getPostDetailByPostId(params) {
 {
   console: function console(options) {
     if (_config.default.debug) {
-      // console.log("<<===============================================>>");
-      // console.log("request start");
-      // console.log("header" + JSON.stringify(options.header));
-      // console.log("method: " + options.method + " URL: " + options.url);
-      // console.log(options.data);
-      // console.log("request end");
-      // console.log("<<===============================================>>");
+      // console.info("<<===============================================>>");
+      // console.info("request start");
+      // console.info("header" + JSON.stringify(options.header));
+      // console.info("method: " + options.method + " URL: " + options.url);
+      // console.info(options.data);
+      // console.info("request end");
+      // console.info("<<===============================================>>");
     }
   }, //end console
   send: function send() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -2795,6 +2827,7 @@ function getPostDetailByPostId(params) {
         }
       }).catch(function (resError) {
         console.log(resError);
+        reject(resError);
       });
     });
   }, //end send

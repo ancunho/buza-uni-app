@@ -10,7 +10,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "B-Studio"
+				"navigationBarTitleText": "B-Studio",
+				"enablePullDownRefresh": true
 			},
 			"permission": {
 				"scope.userLocation": {

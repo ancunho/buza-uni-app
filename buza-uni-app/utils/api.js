@@ -1,6 +1,9 @@
 import request from './request.js';
 
-
+/**
+ * @param {Object} params
+ * @description Get OpenId
+ */
 export function getOpenId(params) {
 	return new Promise((resolve, reject) => {
 		request.get("/miniapp/api/getOpenId.do", params).then(result => {
@@ -8,9 +11,32 @@ export function getOpenId(params) {
 		}).catch(error => {
 			reject(error);
 		})
+	}).catch(resError => {
+		reject(error)
 	});
 }
 
+/**
+ * @param {Object} params
+ * @description Get CustomerDto by customerDto
+ * main parameter: openId
+ */
+export function getCustomerByDto(params) {
+	return new Promise((resolve, reject) => {
+		request.post("/miniapp/api/getCustomerInfoByDto.do", params).then(result => {
+			resolve(result);
+		}).catch(error => {
+			reject(error);
+		});
+	}).catch(resError => {
+		reject(error)
+	});
+};
+
+/**
+ * @param {Object} params
+ * @description Get post catgory list
+ */
 export function getPostCategory(params) {
 	return new Promise((resolve, reject) => {
 		request.post("/miniapp/api/getPostCategory.do", params).then(result => {
@@ -18,6 +44,8 @@ export function getPostCategory(params) {
 		}).catch(error => {
 			reject(error);
 		});
+	}).catch(resError => {
+		reject(error)
 	});
 };
 
@@ -28,6 +56,8 @@ export function getPostListByCodeName(params) {
 		}).catch(error => {
 			reject(error);
 		});
+	}).catch(resError => {
+		reject(error)
 	});
 };
 
@@ -38,6 +68,8 @@ export function getPostDetailByPostId(params) {
 		}).catch(error => {
 			reject(error);
 		});
+	}).catch(resError => {
+		reject(error)
 	});
 };
 

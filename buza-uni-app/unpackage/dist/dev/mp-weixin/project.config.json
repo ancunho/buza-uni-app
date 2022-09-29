@@ -23,16 +23,15 @@
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true,
-    "disableUseStrict": false,
-    "ignoreUploadUnusedFiles": true,
+    "useStaticServer": true,
+    "showES6CompileOption": false,
     "checkInvalidKey": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "useStaticServer": true,
-    "showES6CompileOption": false,
+    "disableUseStrict": false,
     "useCompilerPlugins": false
   },
   "compileType": "miniprogram",

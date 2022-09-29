@@ -3,14 +3,14 @@
 		<view class="title-content">카테고리</view>
 		<view class="top-category">
 			<view 	v-bind:class="idx == onLoadIdx ? 'top-category-item-on' : ''" class="top-category-item" 
-					v-for="(item, idx) in lstCategory"
+					v-for="(item, idx) in lstCategory" v-bind:key="idx"
 					@click="handleGetPostListByCodeName(item,idx)">
 				<text class="top-category-item-text">#{{item.codeName}}</text>
 			</view>
 		</view>
 		<view class="post-title"></view>
 		<view class="post-list">
-			<view class="post-list-item" v-for="(item, idx) in lstPost" >
+			<view class="post-list-item" v-for="(item, idx) in lstPost" v-bind:key="idx">
 				<view class="post-list-item-image">
 					<image mode="widthFix" 
 							:src="item.postThumbnailBig || ''"
@@ -23,11 +23,7 @@
 					<uni-icons class="post-list-item-like" @click="handleClickHeart(item)" type="heart" size="30"></uni-icons>
 				</view>
 			</view>
-			<!-- <view v-for="(item, idx) in lstPost">
-				<view>{{ item.postTitle }}</view>
-			</view> -->
 		</view>
-		<!-- <view @click="handleGetUserInfo">Button</view> -->
 	</view>
 </template>
 
@@ -45,6 +41,8 @@
 				page: 1,
 				limit: 15,
 				showLeft: false,
+				userInfo: {},
+				customerDto: {},
 				// candidates: ['北京', '南京', '东京', '武汉', '天津', '上海', '海口'],
 				// city: ''
 			}
@@ -52,28 +50,49 @@
 		async onLoad() {
 			let _this = this;
 			_this.$utils.showLoading();
-			// Get openId   
+			// Get openId
 			if (uni.getStorageSync("openId") == "") {
-				const code = await _this.onGetWechatCode();
-				var params = {
-					code
-				};
-				_this.$http.getOpenId(params).then(res => {
+				// Get code
+				const code = await _this.onGetWechatCode().then(code => {
+					return code;
+				}).catch(resError => {
+					uni.showToast({
+						icon:'error',
+						title: "获取code失败"
+					})
+					return;
+				});
+				
+				await _this.$http.getOpenId({code}).then(res => {
 					if (res.status === 200) {
 						_this.openId = res.data.openId;
 						uni.setStorageSync("openId", res.data.openId);
 					} else {
 						uni.showToast({
-							title: "Error"
+							icon:'error',
+							title: "无法获取OpenId，请确认网络"
 						});
 					}
 				}).catch(resError => {
 					uni.showToast({
 						title: "Error"
-					})
+					});
+					return;
 				});
 			}
-			// Get UserInfo
+			
+			// get customer info by openId
+			await _this.$http.getCustomerByDto({openId: uni.getStorageSync("openId")}).then(res => {
+				_this.userInfo = res.data == undefined ? "" : res.data;
+				uni.setStorageSync("userInfo", _this.userInfo);
+			}).catch(resError => {
+				uni.showToast({
+					icon:'error',
+					title: "Welcome!"
+				})
+			})
+			
+			// Get Post Category
 			await _this.$http.getPostCategory().then(res => {
 				_this.$utils.hideLoading();
 				if (res.code != 0) {
@@ -81,38 +100,76 @@
 				} else {
 					_this.lstCategory = res.data;
 					if (_this.lstCategory.length > 0) {
+						// Get post list by codeName
 						var params = {
 							postType: _this.lstCategory[0].codeId,
 							page: _this.page,
 							limit: _this.limit
 						};
-						// const postListResult = _this.$http.getPostListByCodeName(params);
-						// _this.lstCategory = postListResult.data;
 						_this.$http.getPostListByCodeName(params).then(resPostList => {
 							_this.lstPost = resPostList.data;
-							console.log(_this.lstPost);
 						}).catch(resErrorPostList => {
 							_this.$utils.msg("获取错误");
-						});
+						}); 
 					}
 				}
 			}).catch(resError => {
 				_this.$utils.hideLoading();
 			});
+			
+		},
+		onPullDownRefresh() {
+			let _this = this;
+			_this.$http.getPostCategory().then(res => {
+				uni.stopPullDownRefresh();
+				if (res.code != 0) {
+					_this.$utils.msg("获取错误");
+				} else {
+					_this.lstCategory = res.data;
+				}
+			}).catch(resError => {
+				uni.showToast({
+					icon:'error',
+					title:"Error!"
+				});
+			});
 		},
 		methods: {
-			handleClickHeart(item) {
+			async handleClickHeart(item) {
 				let _this = this;
 				if(uni.getStorageSync("userInfo") == "") {
-					_this.onWechatInfo().then(res => {
-						console.log(res);
+					// 判断能否使用 getUserProfile接口
+					if (!uni.canIUse('getUserProfile')) {
+						uni.showToast({
+							title: "无法获取getUserProfile",
+							icon: 'error'
+						})
+						return null;	
+					}
+					// 获取getUserProfile
+					const [profileError, profileData] = await uni.getUserProfile({
+						lang: 'zh_CN',
+						desc: 'huqo'
+					}).then(res => {
+						return res;
 					}).catch(resError => {
-						console.log(resError);
+						return resError;
 					});
 					
+					if (profileError) {
+						uni.showToast({
+							title: '用户拒绝了授权',
+							icon: 'fail'
+						});
+						return;
+					}
+					
+					const userInfo = profileData.userInfo;
+					userInfo.openId = uni.getStorageSync("openId");
+					uni.setStorageSync("userInfo", userInfo);
 				} else {
 					console.log(2222);
-					console.log(_this.formData);
+					console.log(uni.getStorageSync("userInfo"));
 				}
 			},
 			handleClickDetail(item) {
@@ -122,10 +179,6 @@
 					animationType: 'pop-in',
 					animationDuration: 200
 				})
-			},
-			handleGetUserInfo() {
-				let _this = this;
-				// _this.onGetUserInfo();
 			},
 			async handleGetPostListByCodeName(item, idx) {
 				let _this = this;
@@ -141,44 +194,39 @@
 					_this.$utils.msg("获取错误");
 				});
 			},
-			async onGetUserInfo() {
-				let _this = this;
-				// 获取用户信息
-				// const userInfo = await _this.onWechatInfo();
-				// var params = {};
-				// const result2 = await _this.$http.getPostCategory(params);
-			},
 			async onWechatInfo() {
 				let _this = this;
 				return new Promise((resolve, reject) => {
-					if (!uni.canIUse('getUserProfile')) {
-						uni.showToast({
-							title: "无法获取getUserProfile",
-							icon: 'error'
-						})
-						return null;	
-					} 
+					
 					uni.getUserProfile({
 						lang: 'zh_CN',
-						desc: 'huqo',
-						success: res => {
-							_this.formData = res.userInfo;
-							return resolve(res.userInfo);
-						},
-						fail: err => {
-							uni.showToast({
-								title: '用户拒绝了授权',
-								icon: 'fail'
-							});
-							return reject(err);
-						}
+						desc: 'huqo'
+					}).then(res => {
+						_this.formData = res.userInfo;
+						resolve(res.userInfo);
+					}).catch(resError => {
+						uni.showToast({
+							title: '用户拒绝了授权',
+							icon: 'fail'
+						});
+						reject(err);
 					})
+				}).catch(promiseError => {
+					uni.showToast({
+						title: '获取用户信息失败',
+						icon: 'fail'
+					});
 				});
 			},
 			async onGetWechatCode() {
 				const [providerErr, providerData] = await uni.getProvider({
 					service: 'oauth'
+				}).then(res => {
+					return res;
+				}).catch(resError => {
+					return resError;
 				});
+				
 				if (providerErr) return uni.showToast({
 					title: '没有获取到服务商',
 					icon: "none"
@@ -188,7 +236,11 @@
 					const options = {
 						provider: provider[0] // 'weixin'
 					};
-					const loginOnData = await uni.login(options);
+					const loginOnData = await uni.login(options).then(res => {
+						return res;
+					}).catch(resError => {
+						return null;
+					});
 					const [loginErr, loginData] = loginOnData;
 					if (loginErr) return uni.showToast({
 						title: loginErr,

@@ -1464,7 +1464,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2668,19 +2668,19 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 12:
-/*!**********************************************************!*\
-  !*** D:/practice/buza-uni-app/buza-uni-app/utils/api.js ***!
-  \**********************************************************/
+/*!**********************************************************************!*\
+  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/utils/api.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getOpenId = getOpenId;exports.getCustomerByDto = getCustomerByDto;exports.getPostCategory = getPostCategory;exports.getPostListByCodeName = getPostListByCodeName;exports.getPostDetailByPostId = getPostDetailByPostId;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.getOpenId = getOpenId;exports.getCustomerByDto = getCustomerByDto;exports.getCustomerById = getCustomerById;exports.procCustomer = procCustomer;exports.getPostCategory = getPostCategory;exports.getPostListByCodeName = getPostListByCodeName;exports.getPostDetailByPostId = getPostDetailByPostId;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                         * @param {Object} params
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                         * @description Get OpenId
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                         */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {Object} params
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * @description Get OpenId
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 function getOpenId(params) {
   return new Promise(function (resolve, reject) {
     _request.default.get("/miniapp/api/getOpenId.do", params).then(function (result) {
@@ -2709,6 +2709,35 @@ function getCustomerByDto(params) {
     reject(error);
   });
 };
+
+function getCustomerById(params) {
+  return new Promise(function (resolve, reject) {
+    _request.default.post("/miniapp/api/getCustomerInfoById.do", params).then(function (result) {
+      resolve(result);
+    }).catch(function (error) {
+      reject(error);
+    });
+  }).catch(function (resError) {
+    reject(error);
+  });
+};
+
+
+/**
+    * @param {Object} params
+    */
+function procCustomer(params) {
+  return new Promise(function (resolve, reject) {
+    _request.default.post("/miniapp/api/proc_customer.do", params).then(function (result) {
+      resolve(result);
+    }).catch(function (error) {
+      reject(error);
+    });
+  }).catch(function (resError) {
+    reject(error);
+  });
+};
+
 
 /**
     * @param {Object} params
@@ -2775,9 +2804,9 @@ function getPostDetailByPostId(params) {
 /***/ }),
 
 /***/ 13:
-/*!**************************************************************!*\
-  !*** D:/practice/buza-uni-app/buza-uni-app/utils/request.js ***!
-  \**************************************************************/
+/*!**************************************************************************!*\
+  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/utils/request.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2852,9 +2881,9 @@ function getPostDetailByPostId(params) {
 /***/ }),
 
 /***/ 14:
-/*!*******************************************************!*\
-  !*** D:/practice/buza-uni-app/buza-uni-app/config.js ***!
-  \*******************************************************/
+/*!*******************************************************************!*\
+  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/config.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2868,16 +2897,24 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 15:
-/*!************************************************************!*\
-  !*** D:/practice/buza-uni-app/buza-uni-app/utils/utils.js ***!
-  \************************************************************/
+/*!************************************************************************!*\
+  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/utils/utils.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.msg = msg;exports.showLoading = showLoading;exports.hideLoading = hideLoading;exports.in_array = in_array;exports.isDataType = isDataType;exports.ltrim = ltrim;exports.rtrim = rtrim;exports.navigateTo = navigateTo;exports.redirectTo = redirectTo;exports.reLaunch = reLaunch;exports.switchTab = switchTab;exports.navigateBack = navigateBack;exports.preloadPage = preloadPage;exports.prePage = prePage;exports.rpx2px = rpx2px;exports.px2rpx = px2rpx;exports.getSystemInfo = getSystemInfo;function msg(content) {var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3000;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.msg = msg;exports.errorMsg = errorMsg;exports.showLoading = showLoading;exports.hideLoading = hideLoading;exports.in_array = in_array;exports.isDataType = isDataType;exports.ltrim = ltrim;exports.rtrim = rtrim;exports.navigateTo = navigateTo;exports.redirectTo = redirectTo;exports.reLaunch = reLaunch;exports.switchTab = switchTab;exports.navigateBack = navigateBack;exports.preloadPage = preloadPage;exports.prePage = prePage;exports.rpx2px = rpx2px;exports.px2rpx = px2rpx;exports.getSystemInfo = getSystemInfo;function msg(content) {var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3000;
   uni.showToast({
     icon: 'none',
+    title: content,
+    duration: time });
+
+};
+
+function errorMsg(content) {var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3000;
+  uni.showToast({
+    icon: 'error',
     title: content,
     duration: time });
 
@@ -4326,9 +4363,9 @@ function resolveLocaleChain(locale) {
 /***/ }),
 
 /***/ 33:
-/*!****************************************************************!*\
-  !*** D:/practice/buza-uni-app/buza-uni-app/utils/rich_text.js ***!
-  \****************************************************************/
+/*!****************************************************************************!*\
+  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/utils/rich_text.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9930,7 +9967,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9951,14 +9988,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -10044,7 +10081,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"buza-uni-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -10459,9 +10496,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 5:
-/*!********************************************************!*\
-  !*** D:/practice/buza-uni-app/buza-uni-app/pages.json ***!
-  \********************************************************/
+/*!********************************************************************!*\
+  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/pages.json ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10470,9 +10507,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 57:
-/*!*************************************************************************************************!*\
-  !*** D:/practice/buza-uni-app/buza-uni-app/uni_modules/uni-icons/components/uni-icons/icons.js ***!
-  \*************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** D:/project/buza-uni-app/buza-uni-app/buza-uni-app/uni_modules/uni-icons/components/uni-icons/icons.js ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

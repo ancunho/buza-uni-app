@@ -6,6 +6,14 @@ export function msg(content, time = 3000) {
 	})
 };
 
+export function errorMsg(content, time = 3000) {
+	uni.showToast({
+		icon: 'error',
+		title: content,
+		duration: time
+	})
+};
+
 export function showLoading(content = "Loading...", mask = true) {
 	uni.showLoading({
 		title: content,

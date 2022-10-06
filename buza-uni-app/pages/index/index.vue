@@ -61,7 +61,7 @@
 						title: "获取code失败"
 					})
 					return;
-				});
+				}); 
 				
 				await _this.$http.getOpenId({code}).then(res => {
 					if (res.status === 200) {
@@ -74,7 +74,7 @@
 						});
 					}
 				}).catch(resError => {
-					uni.showToast({
+					uni.showToast({ 
 						title: "Error"
 					});
 					return;
@@ -82,15 +82,15 @@
 			}
 			
 			// get customer info by openId
-			await _this.$http.getCustomerByDto({openId: uni.getStorageSync("openId")}).then(res => {
-				_this.userInfo = res.data == undefined ? "" : res.data;
-				uni.setStorageSync("userInfo", _this.userInfo);
-			}).catch(resError => {
-				uni.showToast({
-					icon:'error',
-					title: "Welcome!"
-				})
-			})
+			// await _this.$http.getCustomerByDto({openId: uni.getStorageSync("openId")}).then(res => {
+			// 	_this.userInfo = res.data == undefined ? "" : res.data;
+			// 	uni.setStorageSync("userInfo", _this.userInfo);
+			// }).catch(resError => {
+			// 	uni.showToast({
+			// 		icon:'error',
+			// 		title: "Welcome!"
+			// 	})
+			// })
 			
 			// Get Post Category
 			await _this.$http.getPostCategory().then(res => {
@@ -157,20 +157,40 @@
 					});
 					
 					if (profileError) {
-						uni.showToast({
-							title: '用户拒绝了授权',
-							icon: 'fail'
-						});
+						_this.$utils.errorMsg("用户拒绝了授权");
 						return;
 					}
 					
 					const userInfo = profileData.userInfo;
 					userInfo.openId = uni.getStorageSync("openId");
+					userInfo.status = '1';
 					uni.setStorageSync("userInfo", userInfo);
-				} else {
-					console.log(2222);
-					console.log(uni.getStorageSync("userInfo"));
+					
+					
+					// get customer info by openId
+					await _this.$http.procCustomer(userInfo);
+					// await _this.$http.procCustomer(userInfo).then(res => {
+					// 	if (res.code === 0) {
+					// 		// _this.$utils.msg("保存用户信息成功");
+					// 	} else {
+					// 		_this.$utils.errorMsg("保存用户信息失败");
+					// 	}
+					// }).catch(resError => {
+					// 	_this.$utils.errorMsg("procCustomer Error!");
+					// });
 				}
+				
+				const userInfoStorage = uni.getStorageSync("userInfo");
+				
+				// await _this.$http.getCustomerById(userInfoStorage).then(resById => {
+				// 	if (resById.code == 0) {
+						
+				// 	} else {
+						
+				// 	}
+				// }).catch(resErrorById => {
+				// 	_this.$utils.errorMsg("获取用户信息失败");
+				// })
 			},
 			handleClickDetail(item) {
 				let _this = this;
@@ -205,17 +225,11 @@
 						_this.formData = res.userInfo;
 						resolve(res.userInfo);
 					}).catch(resError => {
-						uni.showToast({
-							title: '用户拒绝了授权',
-							icon: 'fail'
-						});
+						_this.$utils.errorMsg("用户拒绝了授权");
 						reject(err);
 					})
 				}).catch(promiseError => {
-					uni.showToast({
-						title: '获取用户信息失败',
-						icon: 'fail'
-					});
+					_this.$utils.errorMsg("获取用户信息失败");
 				});
 			},
 			async onGetWechatCode() {
@@ -259,7 +273,7 @@
 		position:relative;
 		margin-bottom: 15px;
 		padding: 15px;
-		border-bottom: 1px solid #F3F4F6;
+		border-bottom: 1px solid #cbd5e1;
 	}
 	.post-list-item-image image { border-radius: 5px; width:100%; background-color: #eeeeee; }
 	.post-list-item-title {

@@ -60,12 +60,12 @@
 				"pagePath": "pages/index/index",
 				"selectedIconPath": "static/icon-exploer.png"
 			},
-			{
-				"iconPath": "static/icon-present.png",
-				"text": "Product",
-				"pagePath": "pages/product/index",
-				"selectedIconPath": "static/icon-present.png"
-			},
+			// {
+			// 	"iconPath": "static/icon-present.png",
+			// 	"text": "Product",
+			// 	"pagePath": "pages/product/index",
+			// 	"selectedIconPath": "static/icon-present.png"
+			// },
 			{
 				"iconPath": "static/icon-mine.png",
 				"text": "Your",

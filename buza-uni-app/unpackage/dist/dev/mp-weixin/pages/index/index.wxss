@@ -3,7 +3,7 @@
 	position:relative;
 	margin-bottom: 15px;
 	padding: 15px;
-	border-bottom: 1px solid #F3F4F6;
+	border-bottom: 1px solid #cbd5e1;
 }
 .post-list-item-image image { border-radius: 5px; width:100%; background-color: #eeeeee;
 }

@@ -33,6 +33,35 @@ export function getCustomerByDto(params) {
 	});
 };
 
+export function getCustomerById(params) {
+	return new Promise((resolve, reject) => {
+		request.post("/miniapp/api/getCustomerInfoById.do", params).then(result => {
+			resolve(result);
+		}).catch(error => {
+			reject(error);
+		});
+	}).catch(resError => {
+		reject(error)
+	});
+};
+
+
+/**
+ * @param {Object} params
+ */
+export function procCustomer(params) {
+	return new Promise((resolve, reject) => {
+		request.post("/miniapp/api/proc_customer.do", params).then(result => {
+			resolve(result);
+		}).catch(error => {
+			reject(error);
+		});
+	}).catch(resError => {
+		reject(error)
+	});
+};
+
+
 /**
  * @param {Object} params
  * @description Get post catgory list

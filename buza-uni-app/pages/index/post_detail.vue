@@ -4,17 +4,21 @@
 		<view class="post-detail">
 			<view class="post-detail-title">{{postDetail.postTitle}}</view>
 			<view class="post-detail-date">{{postDetail.createTime}}</view>
-			<view class="post-detail-content" v-html="postDetail.postContent"></view>
+			<mp-html class="post-detail-content" :content="postDetail.postContent"></mp-html>
+			<!-- <view class="post-detail-content" v-html="postDetail.postContent"></view> -->
 		</view>
 	</view>
 </template>
 
 <script>
-	var graceRichText = require("../../utils/rich_text.js")
+	var graceRichText = require("../../utils/rich_text.js");
 	export default {
 		data() {
 			return {
-				postDetail: {}
+				postDetail: {},
+				audioAction: {
+					method: 'pause'
+				}
 			}
 		},
 		onLoad(option) {

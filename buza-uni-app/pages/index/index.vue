@@ -20,7 +20,7 @@
 				<view class="post-list-item-title" @click="handleClickDetail(item)">{{item.postTitle}}</view>
 				<view class="post-list-item-remark">
 					<view class="post-list-item-date">Date.{{item.createTime}}</view>
-					<uni-icons class="post-list-item-like" @click="handleClickHeart(item)" type="heart" size="30"></uni-icons>
+					<!-- <uni-icons class="post-list-item-like" @click="handleClickHeart(item)" type="heart" size="30"></uni-icons> -->
 				</view>
 			</view>
 		</view>
@@ -135,63 +135,63 @@
 			});
 		},
 		methods: {
-			async handleClickHeart(item) {
-				let _this = this;
-				if(uni.getStorageSync("userInfo") == "") {
-					// 判断能否使用 getUserProfile接口
-					if (!uni.canIUse('getUserProfile')) {
-						uni.showToast({
-							title: "无法获取getUserProfile",
-							icon: 'error'
-						})
-						return null;	
-					}
-					// 获取getUserProfile
-					const [profileError, profileData] = await uni.getUserProfile({
-						lang: 'zh_CN',
-						desc: 'huqo'
-					}).then(res => {
-						return res;
-					}).catch(resError => {
-						return resError;
-					});
+			// async handleClickHeart(item) {
+			// 	let _this = this;
+			// 	if(uni.getStorageSync("userInfo") == "") {
+			// 		// 判断能否使用 getUserProfile接口
+			// 		if (!uni.canIUse('getUserProfile')) {
+			// 			uni.showToast({
+			// 				title: "无法获取getUserProfile",
+			// 				icon: 'error'
+			// 			})
+			// 			return null;	
+			// 		}
+			// 		// 获取getUserProfile
+			// 		const [profileError, profileData] = await uni.getUserProfile({
+			// 			lang: 'zh_CN',
+			// 			desc: 'huqo'
+			// 		}).then(res => {
+			// 			return res;
+			// 		}).catch(resError => {
+			// 			return resError;
+			// 		});
 					
-					if (profileError) {
-						_this.$utils.errorMsg("用户拒绝了授权");
-						return;
-					}
+			// 		if (profileError) {
+			// 			_this.$utils.errorMsg("用户拒绝了授权");
+			// 			return;
+			// 		}
 					
-					const userInfo = profileData.userInfo;
-					userInfo.openId = uni.getStorageSync("openId");
-					userInfo.status = '1';
-					uni.setStorageSync("userInfo", userInfo);
+			// 		const userInfo = profileData.userInfo;
+			// 		userInfo.openId = uni.getStorageSync("openId");
+			// 		userInfo.status = '1';
+			// 		uni.setStorageSync("userInfo", userInfo);
 					
 					
-					// get customer info by openId
-					await _this.$http.procCustomer(userInfo);
-					// await _this.$http.procCustomer(userInfo).then(res => {
-					// 	if (res.code === 0) {
-					// 		// _this.$utils.msg("保存用户信息成功");
-					// 	} else {
-					// 		_this.$utils.errorMsg("保存用户信息失败");
-					// 	}
-					// }).catch(resError => {
-					// 	_this.$utils.errorMsg("procCustomer Error!");
-					// });
-				}
+			// 		// get customer info by openId
+			// 		await _this.$http.procCustomer(userInfo);
+			// 		// await _this.$http.procCustomer(userInfo).then(res => {
+			// 		// 	if (res.code === 0) {
+			// 		// 		// _this.$utils.msg("保存用户信息成功");
+			// 		// 	} else {
+			// 		// 		_this.$utils.errorMsg("保存用户信息失败");
+			// 		// 	}
+			// 		// }).catch(resError => {
+			// 		// 	_this.$utils.errorMsg("procCustomer Error!");
+			// 		// });
+			// 	}
 				
-				const userInfoStorage = uni.getStorageSync("userInfo");
+			// 	const userInfoStorage = uni.getStorageSync("userInfo");
 				
-				// await _this.$http.getCustomerById(userInfoStorage).then(resById => {
-				// 	if (resById.code == 0) {
+			// 	// await _this.$http.getCustomerById(userInfoStorage).then(resById => {
+			// 	// 	if (resById.code == 0) {
 						
-				// 	} else {
+			// 	// 	} else {
 						
-				// 	}
-				// }).catch(resErrorById => {
-				// 	_this.$utils.errorMsg("获取用户信息失败");
-				// })
-			},
+			// 	// 	}
+			// 	// }).catch(resErrorById => {
+			// 	// 	_this.$utils.errorMsg("获取用户信息失败");
+			// 	// })
+			// },
 			handleClickDetail(item) {
 				let _this = this;
 				uni.navigateTo({

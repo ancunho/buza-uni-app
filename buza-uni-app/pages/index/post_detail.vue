@@ -16,9 +16,6 @@
 		data() {
 			return {
 				postDetail: {},
-				audioAction: {
-					method: 'pause'
-				}
 			}
 		},
 		onLoad(option) {

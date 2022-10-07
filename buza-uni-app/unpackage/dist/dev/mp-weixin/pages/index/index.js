@@ -107,29 +107,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
-try {
-  components = {
-    uniIcons: function() {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 52))
-    }
-  }
-} catch (e) {
-  if (
-    e.message.indexOf("Cannot find module") !== -1 &&
-    e.message.indexOf(".vue") !== -1
-  ) {
-    console.error(e.message)
-    console.error("1. 排查组件名称拼写是否正确")
-    console.error(
-      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
-    )
-    console.error(
-      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
-    )
-  } else {
-    throw e
-  }
-}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -302,63 +279,63 @@ var _default =
     });
   },
   methods: {
-    handleClickHeart: function handleClickHeart(item) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, _yield$uni$getUserPro, _yield$uni$getUserPro2, profileError, profileData, userInfo, userInfoStorage;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
-                _this = _this3;if (!(
-                uni.getStorageSync("userInfo") == "")) {_context2.next = 20;break;}if (
+    // async handleClickHeart(item) {
+    // 	let _this = this;
+    // 	if(uni.getStorageSync("userInfo") == "") {
+    // 		// 判断能否使用 getUserProfile接口
+    // 		if (!uni.canIUse('getUserProfile')) {
+    // 			uni.showToast({
+    // 				title: "无法获取getUserProfile",
+    // 				icon: 'error'
+    // 			})
+    // 			return null;	
+    // 		}
+    // 		// 获取getUserProfile
+    // 		const [profileError, profileData] = await uni.getUserProfile({
+    // 			lang: 'zh_CN',
+    // 			desc: 'huqo'
+    // 		}).then(res => {
+    // 			return res;
+    // 		}).catch(resError => {
+    // 			return resError;
+    // 		});
 
-                uni.canIUse('getUserProfile')) {_context2.next = 5;break;}
-                uni.showToast({
-                  title: "无法获取getUserProfile",
-                  icon: 'error' });return _context2.abrupt("return",
+    // 		if (profileError) {
+    // 			_this.$utils.errorMsg("用户拒绝了授权");
+    // 			return;
+    // 		}
 
-                null);case 5:_context2.next = 7;return (
-
-
-                  uni.getUserProfile({
-                    lang: 'zh_CN',
-                    desc: 'huqo' }).
-                  then(function (res) {
-                    return res;
-                  }).catch(function (resError) {
-                    return resError;
-                  }));case 7:_yield$uni$getUserPro = _context2.sent;_yield$uni$getUserPro2 = _slicedToArray(_yield$uni$getUserPro, 2);profileError = _yield$uni$getUserPro2[0];profileData = _yield$uni$getUserPro2[1];if (!
-
-                profileError) {_context2.next = 14;break;}
-                _this.$utils.errorMsg("用户拒绝了授权");return _context2.abrupt("return");case 14:
-
-
-
-                userInfo = profileData.userInfo;
-                userInfo.openId = uni.getStorageSync("openId");
-                userInfo.status = '1';
-                uni.setStorageSync("userInfo", userInfo);
-
-
-                // get customer info by openId
-                _context2.next = 20;return _this.$http.procCustomer(userInfo);case 20:
+    // 		const userInfo = profileData.userInfo;
+    // 		userInfo.openId = uni.getStorageSync("openId");
+    // 		userInfo.status = '1';
+    // 		uni.setStorageSync("userInfo", userInfo);
 
 
+    // 		// get customer info by openId
+    // 		await _this.$http.procCustomer(userInfo);
+    // 		// await _this.$http.procCustomer(userInfo).then(res => {
+    // 		// 	if (res.code === 0) {
+    // 		// 		// _this.$utils.msg("保存用户信息成功");
+    // 		// 	} else {
+    // 		// 		_this.$utils.errorMsg("保存用户信息失败");
+    // 		// 	}
+    // 		// }).catch(resError => {
+    // 		// 	_this.$utils.errorMsg("procCustomer Error!");
+    // 		// });
+    // 	}
 
+    // 	const userInfoStorage = uni.getStorageSync("userInfo");
 
+    // 	// await _this.$http.getCustomerById(userInfoStorage).then(resById => {
+    // 	// 	if (resById.code == 0) {
 
+    // 	// 	} else {
 
-
-
-
-
-
-                userInfoStorage = uni.getStorageSync("userInfo");
-
-                // await _this.$http.getCustomerById(userInfoStorage).then(resById => {
-                // 	if (resById.code == 0) {
-
-                // 	} else {
-
-                // 	}
-                // }).catch(resErrorById => {
-                // 	_this.$utils.errorMsg("获取用户信息失败");
-                // })
-              case 21:case "end":return _context2.stop();}}}, _callee2);}))();},
+    // 	// 	}
+    // 	// }).catch(resErrorById => {
+    // 	// 	_this.$utils.errorMsg("获取用户信息失败");
+    // 	// })
+    // },
     handleClickDetail: function handleClickDetail(item) {
       var _this = this;
       uni.navigateTo({
@@ -367,22 +344,22 @@ var _default =
         animationDuration: 200 });
 
     },
-    handleGetPostListByCodeName: function handleGetPostListByCodeName(item, idx) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this, params;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
-                _this = _this4;
+    handleGetPostListByCodeName: function handleGetPostListByCodeName(item, idx) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, params;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                _this = _this3;
                 _this.onLoadIdx = idx;
                 params = {
                   postType: item.codeId,
                   page: _this.page,
-                  limit: _this.limit };_context3.next = 5;return (
+                  limit: _this.limit };_context2.next = 5;return (
 
                   _this.$http.getPostListByCodeName(params).then(function (resPostList) {
                     _this.lstPost = resPostList.data;
                   }).catch(function (resErrorPostList) {
                     _this.$utils.msg("获取错误");
-                  }));case 5:case "end":return _context3.stop();}}}, _callee3);}))();
+                  }));case 5:case "end":return _context2.stop();}}}, _callee2);}))();
     },
-    onWechatInfo: function onWechatInfo() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _this;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
-                _this = _this5;return _context4.abrupt("return",
+    onWechatInfo: function onWechatInfo() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                _this = _this4;return _context3.abrupt("return",
                 new Promise(function (resolve, reject) {
 
                   uni.getUserProfile({
@@ -397,39 +374,39 @@ var _default =
                   });
                 }).catch(function (promiseError) {
                   _this.$utils.errorMsg("获取用户信息失败");
-                }));case 2:case "end":return _context4.stop();}}}, _callee4);}))();
+                }));case 2:case "end":return _context3.stop();}}}, _callee3);}))();
     },
-    onGetWechatCode: function onGetWechatCode() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var _yield$uni$getProvide, _yield$uni$getProvide2, providerErr, providerData, provider, options, loginOnData, _loginOnData, loginErr, loginData;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.next = 2;return (
+    onGetWechatCode: function onGetWechatCode() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _yield$uni$getProvide, _yield$uni$getProvide2, providerErr, providerData, provider, options, loginOnData, _loginOnData, loginErr, loginData;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
                   uni.getProvider({
                     service: 'oauth' }).
                   then(function (res) {
                     return res;
                   }).catch(function (resError) {
                     return resError;
-                  }));case 2:_yield$uni$getProvide = _context5.sent;_yield$uni$getProvide2 = _slicedToArray(_yield$uni$getProvide, 2);providerErr = _yield$uni$getProvide2[0];providerData = _yield$uni$getProvide2[1];if (!
+                  }));case 2:_yield$uni$getProvide = _context4.sent;_yield$uni$getProvide2 = _slicedToArray(_yield$uni$getProvide, 2);providerErr = _yield$uni$getProvide2[0];providerData = _yield$uni$getProvide2[1];if (!
 
-                providerErr) {_context5.next = 8;break;}return _context5.abrupt("return", uni.showToast({
+                providerErr) {_context4.next = 8;break;}return _context4.abrupt("return", uni.showToast({
                   title: '没有获取到服务商',
                   icon: "none" }));case 8:
 
                 provider = providerData.provider;if (!
-                provider.includes('weixin')) {_context5.next = 18;break;}
+                provider.includes('weixin')) {_context4.next = 18;break;}
                 options = {
                   provider: provider[0] // 'weixin'
-                };_context5.next = 13;return (
+                };_context4.next = 13;return (
                   uni.login(options).then(function (res) {
                     return res;
                   }).catch(function (resError) {
                     return null;
-                  }));case 13:loginOnData = _context5.sent;_loginOnData = _slicedToArray(
+                  }));case 13:loginOnData = _context4.sent;_loginOnData = _slicedToArray(
                 loginOnData, 2), loginErr = _loginOnData[0], loginData = _loginOnData[1];if (!
-                loginErr) {_context5.next = 17;break;}return _context5.abrupt("return", uni.showToast({
+                loginErr) {_context4.next = 17;break;}return _context4.abrupt("return", uni.showToast({
                   title: loginErr,
-                  icon: 'none' }));case 17:return _context5.abrupt("return",
+                  icon: 'none' }));case 17:return _context4.abrupt("return",
 
-                loginData.code);case 18:return _context5.abrupt("return",
+                loginData.code);case 18:return _context4.abrupt("return",
 
-                null);case 19:case "end":return _context5.stop();}}}, _callee5);}))();
+                null);case 19:case "end":return _context4.stop();}}}, _callee4);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

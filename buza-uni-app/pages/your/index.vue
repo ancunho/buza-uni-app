@@ -50,13 +50,18 @@
 				});
 			}
 			
+			if (uni.getStorageSync("userInfo") != "") {
+				_this.userInfo = uni.getStorageSync("userInfo");
+			}
+			
 		},
 		methods: {
 			handleGetUserInfo() {
 				let _this = this;
 				_this.onWechatInfo().then(res => {
-					console.log(res);
 					_this.userInfo = res;
+					_this.userInfo.openId = uni.getStorageSync("openId");
+					uni.setStorageSync("userInfo", _this.userInfo);
 				}).catch(err => {
 					uni.showToast({
 						title: "Error",

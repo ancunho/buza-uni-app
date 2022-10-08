@@ -77,7 +77,8 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "B-Studio",
-		"navigationBarBackgroundColor": "#FCD34D",
+		// "navigationBarBackgroundColor": "#FCD34D",
+		"navigationBarBackgroundColor": "#ffffff",
 		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {}

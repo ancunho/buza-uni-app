@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/index/post_detail",
     "pages/product/index",
-    "pages/your/index"
+    "pages/intro/index"
   ],
   "subPackages": [],
   "window": {
@@ -26,8 +26,8 @@
       },
       {
         "iconPath": "static/icon-mine.png",
-        "text": "Your",
-        "pagePath": "pages/your/index",
+        "text": "Intro",
+        "pagePath": "pages/intro/index",
         "selectedIconPath": "static/icon-mine.png"
       }
     ]

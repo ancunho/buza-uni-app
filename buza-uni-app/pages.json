@@ -37,9 +37,9 @@
 			}
 		},
 		{
-			"path": "pages/your/index",
+			"path": "pages/intro/index",
 			"style": {
-				"navigationBarTitleText": "Your's"
+				"navigationBarTitleText": "Intro"
 			},
 			"permission": {
 				"scope.userLocation": {
@@ -68,8 +68,8 @@
 			// },
 			{
 				"iconPath": "static/icon-mine.png",
-				"text": "Your",
-				"pagePath": "pages/your/index",
+				"text": "Intro",
+				"pagePath": "pages/intro/index",
 				"selectedIconPath": "static/icon-mine.png"
 			}
 		]

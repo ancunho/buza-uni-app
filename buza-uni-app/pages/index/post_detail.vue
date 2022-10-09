@@ -50,9 +50,7 @@
 	/* #ifdef H5 */
 	.post-detail-box { max-width:680px; margin: 0 auto;}
 	/* #endif */
-	.post-detail {
-		padding: 10px 15px;
-	}
+	.post-detail { padding: 10px 15px; }
 	.post-detail-big-image { width: 100%; }
 	.post-detail-title { font-size: 1.2rem; font-family: 'HallymGothic-Regular';}
 	.post-detail-date {margin-top: 7px; font-size: 0.7rem; font-family: 'HallymGothic-Regular';}

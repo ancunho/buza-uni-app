@@ -313,6 +313,7 @@
 		cursor: pointer;
 		border-radius: 10px;
 		box-shadow: 2px 2px 5px #e5e7eb;
+		
 	}
 
 	.top-category-item.top-category-item-on,
@@ -328,10 +329,19 @@
 	.top-category-item-text {
 		font-size: 0.80rem;
 		font-weight: bolder;
+		/* display: block;
+		font-weight: 700;
+		line-height: 20px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100%;
+		word-break: break-all; */
 	}
 
-	.content {}
-
+	/* #ifdef H5 */
+	.content { max-width:680px; margin: 0 auto;}
+	/* #endif */
 	.text-area {
 		display: flex;
 		justify-content: center;

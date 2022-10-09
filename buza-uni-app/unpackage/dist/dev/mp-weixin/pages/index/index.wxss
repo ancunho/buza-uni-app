@@ -55,8 +55,15 @@
 .top-category-item-text {
 	font-size: 0.80rem;
 	font-weight: bolder;
+	/* display: block;
+	font-weight: 700;
+	line-height: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+	word-break: break-all; */
 }
-.content {}
 .text-area {
 	display: flex;
 	justify-content: center;
